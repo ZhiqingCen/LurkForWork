@@ -42,14 +42,16 @@ const register = (email, password, name) => {
 };
 
 const login = (email, password) => {
-    apiCall("auth/login", "POST", {
-        email,
-        password,
-    }).then((body) => {
-        authToken = body.token;
-        authUserId = body.userId;
-        toggleScreenWelcome();
-    });
+    return new Promise((resolve, reject) => {
+        apiCall("auth/login", "POST", {
+            email,
+            password,
+        }).then((body) => {
+            authToken = body.token;
+            authUserId = body.userId;
+            resolve();
+        });
+    })
 };
 
 const getProfile = (userId) => {
@@ -79,7 +81,9 @@ document.getElementById("login-btn").addEventListener("click", () => {
     const loginEmail = document.getElementById("login-email").value;
     const loginPassword = document.getElementById("login-password").value;
     
-    login(loginEmail, loginPassword);
+    login(loginEmail, loginPassword).then(() => {
+        toggleScreenWelcome();
+    });
 
     console.log("login"); // TODO
 });

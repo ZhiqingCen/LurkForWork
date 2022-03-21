@@ -1,17 +1,19 @@
-import { BACKEND_PORT } from './config.js';
+import { BACKEND_PORT } from "./config.js";
 // A helper you may want to use when uploading new images to the server.
-import { fileToDataUrl } from './helpers.js';
+import { fileToDataUrl } from "./helpers.js";
 
 let authToken = null;
 let authUserId = null;
 
-const apiCall = (path, requestBody) => {
+const apiCall = (path, httpMethod, requestBody, callback) => {
     const init = {
-        method: "POST",
+        method: httpMethod,
         headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
+            Authorization: (path === "auth/register" || path === "auth/login") ? undefined : authToken,
         },
-        body: JSON.stringify(requestBody),
+        body: httpMethod === "GET" ? undefined : JSON.stringify(requestBody),
+        // body: JSON.stringify(requestBody),
     };
 
     fetch(`http://localhost:${BACKEND_PORT}/${path}`, init)
@@ -20,30 +22,39 @@ const apiCall = (path, requestBody) => {
             if (body.error) {
                 alert(body.error); // TODO
             } else {
-                authToken = body.token;
-                authUserId = body.userId;
-                toggleScreenWelcome();
+                callback(body);
             }
         });
 }
 
 const register = (email, password, name) => {
-    apiCall("auth/register", {
+    apiCall("auth/register", "POST", {
         email,
         password,
         name,
+    }, (body) => {
+        authToken = body.token;
+        authUserId = body.userId;
+        toggleScreenWelcome();
     });
 };
 
 const login = (email, password) => {
-    apiCall("auth/login", {
+    apiCall("auth/login", "POST", {
         email,
         password,
+    }, (body) => {
+        authToken = body.token;
+        authUserId = body.userId;
+        toggleScreenWelcome();
     });
 };
 
 const getProfile = (userId) => {
-    console.log(userId); // TODO
+    // console.log(userId); // TODO
+    apiCall(`user?userId=${userId}`, "GET", {}, (body) => {
+        document.getElementById("user-json").innerText = JSON.stringify(body);
+    });
 };
 
 document.getElementById("register-btn").addEventListener("click", () => {

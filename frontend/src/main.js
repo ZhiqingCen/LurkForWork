@@ -6,25 +6,27 @@ let authToken = null;
 let authUserId = null;
 
 const apiCall = (path, httpMethod, requestBody, callback) => {
-    const init = {
-        method: httpMethod,
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: (path === "auth/register" || path === "auth/login") ? undefined : authToken,
-        },
-        body: httpMethod === "GET" ? undefined : JSON.stringify(requestBody),
-        // body: JSON.stringify(requestBody),
-    };
-
-    fetch(`http://localhost:${BACKEND_PORT}/${path}`, init)
-        .then(response => response.json())
-        .then(body => {
-            if (body.error) {
-                alert(body.error); // TODO
-            } else {
-                callback(body);
-            }
-        });
+    return new Promise((resolve, reject) => {
+        const init = {
+            method: httpMethod,
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: (path === "auth/register" || path === "auth/login") ? undefined : authToken,
+            },
+            body: httpMethod === "GET" ? undefined : JSON.stringify(requestBody),
+            // body: JSON.stringify(requestBody),
+        };
+    
+        fetch(`http://localhost:${BACKEND_PORT}/${path}`, init)
+            .then(response => response.json())
+            .then(body => {
+                if (body.error) {
+                    alert(body.error); // TODO
+                } else {
+                    resolve(body);
+                }
+            });
+    });
 }
 
 const register = (email, password, name) => {
@@ -32,7 +34,7 @@ const register = (email, password, name) => {
         email,
         password,
         name,
-    }, (body) => {
+    }).then((body) => {
         authToken = body.token;
         authUserId = body.userId;
         toggleScreenWelcome();
@@ -43,7 +45,7 @@ const login = (email, password) => {
     apiCall("auth/login", "POST", {
         email,
         password,
-    }, (body) => {
+    }).then((body) => {
         authToken = body.token;
         authUserId = body.userId;
         toggleScreenWelcome();
@@ -52,7 +54,7 @@ const login = (email, password) => {
 
 const getProfile = (userId) => {
     // console.log(userId); // TODO
-    apiCall(`user?userId=${userId}`, "GET", {}, (body) => {
+    apiCall(`user?userId=${userId}`, "GET", {}).then((body) => {
         document.getElementById("user-json").innerText = JSON.stringify(body);
     });
 };

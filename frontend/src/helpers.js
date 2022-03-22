@@ -29,3 +29,14 @@ export function fileToDataUrl(file) {
     reader.readAsDataURL(file);
     return dataUrlPromise;
 }
+
+export function popupError(message) {
+    const popup = document.getElementById("popup-modal");
+    const popupText = document.getElementById("popup-text");
+    const closeBtn = document.getElementById("popup-close");
+    popup.style.display = "block";
+    popupText.textContent = message;
+    closeBtn.addEventListener("click", () => {
+        popup.style.display = "none";
+    });
+}

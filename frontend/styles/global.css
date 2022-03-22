@@ -4,6 +4,8 @@ html, body {
     padding: 0;
     height: 100%;
     font-family: Arial;
+    min-width: 400px;
+    min-height: 700px;
 }
 .hide {
     display: none;
@@ -17,4 +19,35 @@ html, body {
     padding: 10px;
     border: solid;
     border-radius: 5px;
+}
+
+/* popup-modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    align-self: center;
+    width: 300px;
+    height: 150px;
+    overflow: auto;
+    border-radius: 4px;
+    background-color: rgb(236, 162, 181);
+
+}
+.close {
+    float: right;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 5px 10px 0px 0px;
+}
+.close:hover, .close:focus {
+    color: #aaa;
+    text-decoration: none;
+    cursor: pointer;
+}
+#popup-text {
+    padding: 30px;
 }

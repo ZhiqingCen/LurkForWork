@@ -1,6 +1,6 @@
 import { BACKEND_PORT } from "./config.js";
 // A helper you may want to use when uploading new images to the server.
-import { fileToDataUrl } from "./helpers.js";
+import { fileToDataUrl, popupError } from "./helpers.js";
 
 let authToken = null;
 let authUserId = null;
@@ -20,11 +20,16 @@ const apiCall = (path, httpMethod, requestBody) => {
             .then(response => response.json())
             .then(body => {
                 if (body.error) {
-                    alert(body.error); // TODO
+                    // alert(body.error); // TODO
+                    // reject(body.error);
+                    popupError(body.error); // TODO
                 } else {
                     resolve(body);
                 }
             });
+            // .catch((message) => {
+            //     alert(message);
+            // });
     });
 }
 
@@ -63,6 +68,9 @@ document.getElementById("register-btn").addEventListener("click", () => {
         authUserId = body.userId;
         toggleScreenWelcome();
     });
+    // .catch((message) => {
+    //     alert(message);
+    // });
 });
 
 document.getElementById("login-btn").addEventListener("click", () => {
@@ -74,6 +82,9 @@ document.getElementById("login-btn").addEventListener("click", () => {
         authUserId = body.userId;
         toggleScreenWelcome();
     });
+    // .catch((message) => {
+    //     alert(message);
+    // });
 });
 
 const toggleScreenRegister = () => {
@@ -94,7 +105,10 @@ const toggleScreenWelcome = () => {
     document.getElementById("screen-login").style.display = "none";
     getProfile(authUserId).then((body) => {
         document.getElementById("user-json").innerText = JSON.stringify(body);
-    }) ;
+    });
+    // .catch((message) => {
+    //     alert(message);
+    // });
 };
     
 document.getElementById("nav-register").addEventListener("click", toggleScreenRegister);

@@ -15,8 +15,8 @@
  */
 
 import { BACKEND_PORT } from "./config.js";
-const authToken = localStorage.getItem("authToken");
-const authUserId = localStorage.getItem("authUserId");
+
+// const authUserId = localStorage.getItem("authUserId");
 
 export function fileToDataUrl(file) {
     const validFileTypes = [ 'image/jpeg', 'image/png', 'image/jpg' ]
@@ -50,6 +50,7 @@ export function popupError(message) {
 }
 
 export function apiCall (path, httpMethod, requestBody) {
+    let authToken = localStorage.getItem("authToken");
     return new Promise((resolve, reject) => {
         const init = {
             method: httpMethod,
@@ -64,14 +65,11 @@ export function apiCall (path, httpMethod, requestBody) {
             .then(response => response.json())
             .then(body => {
                 if (body.error) {
-                    // alert(body.error); // TODO
-                    // reject(body.error);
-                    popupError(body.error); // TODO
+                    popupError(body.error);
                 } else {
                     resolve(body);
                 }
             }).catch((err) => {
-                // alert(message);
                 popupError(err);
             });
     });

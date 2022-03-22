@@ -2,38 +2,7 @@ import { BACKEND_PORT } from "./config.js";
 // A helper you may want to use when uploading new images to the server.
 import { fileToDataUrl, popupError, apiCall } from "./helpers.js";
 
-// let authToken = null;
-// let authUserId = null;
-// import("./welcome.js");
 import { toggleScreenWelcome } from "./welcome.js";
-
-// const apiCall = (path, httpMethod, requestBody) => {
-//     return new Promise((resolve, reject) => {
-//         const init = {
-//             method: httpMethod,
-//             headers: {
-//                 "Content-Type": "application/json",
-//                 Authorization: (path === "auth/register" || path === "auth/login") ? undefined : authToken,
-//             },
-//             body: httpMethod === "GET" ? undefined : JSON.stringify(requestBody),
-//         };
-    
-//         fetch(`http://localhost:${BACKEND_PORT}/${path}`, init)
-//             .then(response => response.json())
-//             .then(body => {
-//                 if (body.error) {
-//                     // alert(body.error); // TODO
-//                     // reject(body.error);
-//                     popupError(body.error); // TODO
-//                 } else {
-//                     resolve(body);
-//                 }
-//             })
-//             .catch((message) => {
-//                 alert(message);
-//             });
-//     });
-// }
 
 const register = (email, password, name) => {
     return apiCall("auth/register", "POST", {
@@ -42,17 +11,6 @@ const register = (email, password, name) => {
         name,
     });
 };
-
-// const login = (email, password) => {
-//     return apiCall("auth/login", "POST", {
-//         email,
-//         password,
-//     });
-// };
-
-// const getProfile = (userId) => {
-//     return apiCall(`user?userId=${userId}`, "GET", {});
-// };
 
 document.getElementById("register-btn").addEventListener("click", () => {
     const registerEmail = document.getElementById("register-email").value;
@@ -66,61 +24,20 @@ document.getElementById("register-btn").addEventListener("click", () => {
     }
 
     register(registerEmail, registerPassword, registerName).then((body) => {
-        // authToken = body.token;
-        // authUserId = body.userId;
         localStorage.setItem("authToken", body.token);
         localStorage.setItem("authUserId", body.userId);
         toggleScreenWelcome();
+    }).catch((err) => {
+        popupError(err);
     });
-    // .catch((message) => {
-    //     alert(message);
-    // });
 });
 
-// document.getElementById("login-btn").addEventListener("click", () => {
-//     const loginEmail = document.getElementById("login-email").value;
-//     const loginPassword = document.getElementById("login-password").value;
+const toggleScreenRegister = () => {
+    document.getElementById("screen-register").style.display = "block";
+    document.getElementById("nav-register").style.backgroundColor = "rgb(" + 247 + "," + 238 + "," + 197 + ")";
+    document.getElementById("screen-login").style.display = "none";
+    document.getElementById("nav-login").style.backgroundColor = "white";
+    document.getElementById("screen-welcome").style.display = "none";
+};
     
-//     login(loginEmail, loginPassword).then((body) => {
-//         authToken = body.token;
-//         authUserId = body.userId;
-//         toggleScreenWelcome();
-//     });
-//     // .catch((message) => {
-//     //     alert(message);
-//     // });
-// });
-
-// const toggleScreenRegister = () => {
-//     document.getElementById("screen-register").style.display = "block";
-//     document.getElementById("nav-register").style.backgroundColor = "rgb(" + 247 + "," + 238 + "," + 197 + ")";
-//     document.getElementById("screen-login").style.display = "none";
-//     document.getElementById("nav-login").style.backgroundColor = "white";
-//     document.getElementById("screen-welcome").style.display = "none";
-// };
-
-// const toggleScreenLogin = () => {
-//     document.getElementById("screen-login").style.display = "block";
-//     document.getElementById("nav-login").style.backgroundColor = "rgb(" + 247 + "," + 238 + "," + 197 + ")";
-//     document.getElementById("screen-register").style.display = "none";
-//     document.getElementById("nav-register").style.backgroundColor = "white";
-//     document.getElementById("screen-welcome").style.display = "none";
-// };
-
-// const toggleScreenWelcome = () => {
-//     document.getElementById("screen-welcome").style.display = "block";
-//     document.getElementById("screen-register").style.display = "none";
-//     document.getElementById("nav-register").style.display = "none";
-//     document.getElementById("screen-login").style.display = "none";
-//     document.getElementById("nav-login").style.display = "none";
-//     getProfile(authUserId).then((body) => {
-//         // document.getElementById("user-json").innerText = JSON.stringify(body);
-//         document.getElementById("user-json").innerText = `Hi ${body.name}`;
-//     });
-//     // .catch((message) => {
-//     //     alert(message);
-//     // });
-// };
-    
-// document.getElementById("nav-register").addEventListener("click", toggleScreenRegister);
-// document.getElementById("nav-login").addEventListener("click", toggleScreenLogin);
+document.getElementById("nav-register").addEventListener("click", toggleScreenRegister);

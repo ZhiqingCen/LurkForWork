@@ -1,50 +1,38 @@
 {
   "users": {
-    "38000": {
+    "32393": {
+      "email": "augustine@email.com",
+      "name": "Augustine",
+      "password": "august",
+      "watcheeUserIds": {
+        "86533": true
+      }
+    },
+    "86533": {
       "email": "betty@email.com",
       "name": "Betty",
       "password": "cardigan",
       "watcheeUserIds": {}
     },
-    "56428": {
-      "email": "myemail@gmail.com",
-      "name": "hello",
-      "password": "111",
-      "watcheeUserIds": {}
-    },
-    "82743": {
+    "90072": {
       "email": "james@email.com",
       "name": "James",
       "password": "betty",
       "watcheeUserIds": {
-        "38000": true,
-        "99478": true
-      }
-    },
-    "85861": {
-      "email": "zhiqingcen.zc@gmail.com",
-      "name": "zhiqing",
-      "password": "123",
-      "watcheeUserIds": {}
-    },
-    "99478": {
-      "email": "augustine@email.com",
-      "name": "Augustine",
-      "password": "august",
-      "watcheeUserIds": {
-        "38000": true
+        "32393": true,
+        "86533": true
       }
     }
   },
   "posts": {
-    "908796": {
-      "id": "908796",
-      "creatorId": 38000,
+    "923538": {
+      "id": "923538",
+      "creatorId": 86533,
       "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==",
       "title": "Hello Kitty Director",
       "start": "2011-10-05T14:48:00.000Z",
       "description": "Dedicated technical wizard with a passion and interest in human relationships",
-      "createdAt": "2022-03-22T06:44:08.723Z",
+      "createdAt": "2022-03-22T07:11:26.623Z",
       "likes": {},
       "comments": []
     }

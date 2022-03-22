@@ -5,7 +5,7 @@ import { fileToDataUrl } from "./helpers.js";
 let authToken = null;
 let authUserId = null;
 
-const apiCall = (path, httpMethod, requestBody, callback) => {
+const apiCall = (path, httpMethod, requestBody) => {
     return new Promise((resolve, reject) => {
         const init = {
             method: httpMethod,
@@ -14,7 +14,6 @@ const apiCall = (path, httpMethod, requestBody, callback) => {
                 Authorization: (path === "auth/register" || path === "auth/login") ? undefined : authToken,
             },
             body: httpMethod === "GET" ? undefined : JSON.stringify(requestBody),
-            // body: JSON.stringify(requestBody),
         };
     
         fetch(`http://localhost:${BACKEND_PORT}/${path}`, init)
@@ -30,35 +29,22 @@ const apiCall = (path, httpMethod, requestBody, callback) => {
 }
 
 const register = (email, password, name) => {
-    apiCall("auth/register", "POST", {
+    return apiCall("auth/register", "POST", {
         email,
         password,
         name,
-    }).then((body) => {
-        authToken = body.token;
-        authUserId = body.userId;
-        toggleScreenWelcome();
     });
 };
 
 const login = (email, password) => {
-    return new Promise((resolve, reject) => {
-        apiCall("auth/login", "POST", {
-            email,
-            password,
-        }).then((body) => {
-            authToken = body.token;
-            authUserId = body.userId;
-            resolve();
-        });
-    })
+    return apiCall("auth/login", "POST", {
+        email,
+        password,
+    });
 };
 
 const getProfile = (userId) => {
-    // console.log(userId); // TODO
-    apiCall(`user?userId=${userId}`, "GET", {}).then((body) => {
-        document.getElementById("user-json").innerText = JSON.stringify(body);
-    });
+    return apiCall(`user?userId=${userId}`, "GET", {});
 };
 
 document.getElementById("register-btn").addEventListener("click", () => {
@@ -72,20 +58,22 @@ document.getElementById("register-btn").addEventListener("click", () => {
         return;
     }
 
-    register(registerEmail, registerPassword, registerName);
-
-    console.log("register"); // TODO
+    register(registerEmail, registerPassword, registerName).then((body) => {
+        authToken = body.token;
+        authUserId = body.userId;
+        toggleScreenWelcome();
+    });
 });
 
 document.getElementById("login-btn").addEventListener("click", () => {
     const loginEmail = document.getElementById("login-email").value;
     const loginPassword = document.getElementById("login-password").value;
     
-    login(loginEmail, loginPassword).then(() => {
+    login(loginEmail, loginPassword).then((body) => {
+        authToken = body.token;
+        authUserId = body.userId;
         toggleScreenWelcome();
     });
-
-    console.log("login"); // TODO
 });
 
 const toggleScreenRegister = () => {
@@ -104,8 +92,9 @@ const toggleScreenWelcome = () => {
     document.getElementById("screen-welcome").style.display = "block";
     document.getElementById("screen-register").style.display = "none";
     document.getElementById("screen-login").style.display = "none";
-    console.log("load the user"); // TODO
-    getProfile(authUserId);
+    getProfile(authUserId).then((body) => {
+        document.getElementById("user-json").innerText = JSON.stringify(body);
+    }) ;
 };
     
 document.getElementById("nav-register").addEventListener("click", toggleScreenRegister);

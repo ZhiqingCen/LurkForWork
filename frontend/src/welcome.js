@@ -1,19 +1,23 @@
 import { BACKEND_PORT } from "./config.js";
 // A helper you may want to use when uploading new images to the server.
-import { fileToDataUrl, popupError } from "./helpers.js";
+import { fileToDataUrl, popupError, apiCall  } from "./helpers.js";
 
-// const authToken = localStorage.getItem("authToken");
-// const authUserId = localStorage.getItem("authUserId");
+// let authToken = null;
+// let authUserId = null;
+const authToken = localStorage.getItem("authToken");
+const authUserId = localStorage.getItem("authUserId");
 
-// const apiCall = (path, httpMethod, requestBody) => {
+// const apiCall = (path) => {
 //     return new Promise((resolve, reject) => {
 //         const init = {
-//             method: httpMethod,
+//             method: "GET",
 //             headers: {
 //                 "Content-Type": "application/json",
-//                 Authorization: (path === "auth/register" || path === "auth/login") ? undefined : authToken,
+//                 // Authorization: (path === "auth/register" || path === "auth/login") ? undefined : authToken,
+//                 Authorization: authToken,
 //             },
-//             body: httpMethod === "GET" ? undefined : JSON.stringify(requestBody),
+//             // body: httpMethod === "GET" ? undefined : JSON.stringify(requestBody),
+//             body: undefined,
 //         };
     
 //         fetch(`http://localhost:${BACKEND_PORT}/${path}`, init)
@@ -48,9 +52,9 @@ import { fileToDataUrl, popupError } from "./helpers.js";
 //     });
 // };
 
-// const getProfile = (userId) => {
-//     return apiCall(`user?userId=${userId}`, "GET", {});
-// };
+const getProfile = (userId) => {
+    return apiCall(`user?userId=${userId}`, "GET", {});
+};
 
 // document.getElementById("register-btn").addEventListener("click", () => {
 //     const registerEmail = document.getElementById("register-email").value;
@@ -87,40 +91,36 @@ import { fileToDataUrl, popupError } from "./helpers.js";
 //     // });
 // });
 
-import("./register.js");
-import("./login.js");
-// import("./welcome.js");
-
-const toggleScreenRegister = () => {
-    document.getElementById("screen-register").style.display = "block";
-    document.getElementById("nav-register").style.backgroundColor = "rgb(" + 247 + "," + 238 + "," + 197 + ")";
-    document.getElementById("screen-login").style.display = "none";
-    document.getElementById("nav-login").style.backgroundColor = "white";
-    document.getElementById("screen-welcome").style.display = "none";
-};
-
-const toggleScreenLogin = () => {
-    document.getElementById("screen-login").style.display = "block";
-    document.getElementById("nav-login").style.backgroundColor = "rgb(" + 247 + "," + 238 + "," + 197 + ")";
-    document.getElementById("screen-register").style.display = "none";
-    document.getElementById("nav-register").style.backgroundColor = "white";
-    document.getElementById("screen-welcome").style.display = "none";
-};
-
-// const toggleScreenWelcome = () => {
-//     document.getElementById("screen-welcome").style.display = "block";
-//     document.getElementById("screen-register").style.display = "none";
-//     document.getElementById("nav-register").style.display = "none";
+// const toggleScreenRegister = () => {
+//     document.getElementById("screen-register").style.display = "block";
+//     document.getElementById("nav-register").style.backgroundColor = "rgb(" + 247 + "," + 238 + "," + 197 + ")";
 //     document.getElementById("screen-login").style.display = "none";
-//     document.getElementById("nav-login").style.display = "none";
-//     getProfile(authUserId).then((body) => {
-//         // document.getElementById("user-json").innerText = JSON.stringify(body);
-//         document.getElementById("user-json").innerText = `Hi ${body.name}`;
-//     });
-//     // .catch((message) => {
-//     //     alert(message);
-//     // });
+//     document.getElementById("nav-login").style.backgroundColor = "white";
+//     document.getElementById("screen-welcome").style.display = "none";
 // };
+
+// const toggleScreenLogin = () => {
+//     document.getElementById("screen-login").style.display = "block";
+//     document.getElementById("nav-login").style.backgroundColor = "rgb(" + 247 + "," + 238 + "," + 197 + ")";
+//     document.getElementById("screen-register").style.display = "none";
+//     document.getElementById("nav-register").style.backgroundColor = "white";
+//     document.getElementById("screen-welcome").style.display = "none";
+// };
+
+export function toggleScreenWelcome () {
+    document.getElementById("screen-welcome").style.display = "block";
+    document.getElementById("screen-register").style.display = "none";
+    document.getElementById("nav-register").style.display = "none";
+    document.getElementById("screen-login").style.display = "none";
+    document.getElementById("nav-login").style.display = "none";
+    getProfile(authUserId).then((body) => {
+        // document.getElementById("user-json").innerText = JSON.stringify(body);
+        document.getElementById("user-json").innerText = `Hi ${body.name}`;
+    });
+    // .catch((message) => {
+    //     alert(message);
+    // });
+};
     
-document.getElementById("nav-register").addEventListener("click", toggleScreenRegister);
-document.getElementById("nav-login").addEventListener("click", toggleScreenLogin);
+// document.getElementById("nav-register").addEventListener("click", toggleScreenRegister);
+// document.getElementById("nav-login").addEventListener("click", toggleScreenLogin);

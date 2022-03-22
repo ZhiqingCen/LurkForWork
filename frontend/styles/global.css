@@ -7,18 +7,60 @@ html, body {
     min-width: 400px;
     min-height: 700px;
 }
+body {
+    display: flex;
+    flex-direction: column;
+}
+header {
+    align-self: flex-start;
+}
+main {
+    height: 85%;
+}
+footer {
+    align-self: flex-end;
+}
+
 .hide {
     display: none;
 }
+/* .show {
+    display: block;
+} */
 .nav-item {
     text-decoration: underline;
     cursor: pointer;
 }
-#screen-register, #screen-login, #screen-welcome {
-    margin: 10px;
+
+/* before login */
+#before-login {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+}
+#nav-container {
+    display: flex;
+    justify-content: space-between;
+}
+#nav-register, #nav-login {
+    width: 50%;
+    height: 30px;
+    /* color: white; */
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+#nav-register {
+    background-color: rgb(247, 238, 197);
+}
+
+#screen-register, #screen-login{
+    /* margin: 10px; */
     padding: 10px;
     border: solid;
-    border-radius: 5px;
+    border-top: none;
+    /* border-radius: 5px; */
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 
 /* popup-modal */
@@ -33,9 +75,9 @@ html, body {
     width: 300px;
     height: 150px;
     overflow: auto;
+    border: solid;
     border-radius: 4px;
     background-color: rgb(236, 162, 181);
-
 }
 .close {
     float: right;

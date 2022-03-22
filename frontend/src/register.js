@@ -1,9 +1,11 @@
 import { BACKEND_PORT } from "./config.js";
 // A helper you may want to use when uploading new images to the server.
-import { fileToDataUrl, popupError } from "./helpers.js";
+import { fileToDataUrl, popupError, apiCall } from "./helpers.js";
 
-// const authToken = localStorage.getItem("authToken");
-// const authUserId = localStorage.getItem("authUserId");
+// let authToken = null;
+// let authUserId = null;
+// import("./welcome.js");
+import { toggleScreenWelcome } from "./welcome.js";
 
 // const apiCall = (path, httpMethod, requestBody) => {
 //     return new Promise((resolve, reject) => {
@@ -26,20 +28,20 @@ import { fileToDataUrl, popupError } from "./helpers.js";
 //                 } else {
 //                     resolve(body);
 //                 }
+//             })
+//             .catch((message) => {
+//                 alert(message);
 //             });
-//             // .catch((message) => {
-//             //     alert(message);
-//             // });
 //     });
 // }
 
-// const register = (email, password, name) => {
-//     return apiCall("auth/register", "POST", {
-//         email,
-//         password,
-//         name,
-//     });
-// };
+const register = (email, password, name) => {
+    return apiCall("auth/register", "POST", {
+        email,
+        password,
+        name,
+    });
+};
 
 // const login = (email, password) => {
 //     return apiCall("auth/login", "POST", {
@@ -52,26 +54,28 @@ import { fileToDataUrl, popupError } from "./helpers.js";
 //     return apiCall(`user?userId=${userId}`, "GET", {});
 // };
 
-// document.getElementById("register-btn").addEventListener("click", () => {
-//     const registerEmail = document.getElementById("register-email").value;
-//     const registerName = document.getElementById("register-name").value;
-//     const registerPassword = document.getElementById("register-password").value;
-//     const registerPasswordConfirm = document.getElementById("register-password-confirm").value;
+document.getElementById("register-btn").addEventListener("click", () => {
+    const registerEmail = document.getElementById("register-email").value;
+    const registerName = document.getElementById("register-name").value;
+    const registerPassword = document.getElementById("register-password").value;
+    const registerPasswordConfirm = document.getElementById("register-password-confirm").value;
     
-//     if (registerPassword !== registerPasswordConfirm) {
-//         popupError("Passwords don't match"); // TODO
-//         return;
-//     }
+    if (registerPassword !== registerPasswordConfirm) {
+        popupError("Passwords don't match"); // TODO
+        return;
+    }
 
-//     register(registerEmail, registerPassword, registerName).then((body) => {
-//         authToken = body.token;
-//         authUserId = body.userId;
-//         toggleScreenWelcome();
-//     });
-//     // .catch((message) => {
-//     //     alert(message);
-//     // });
-// });
+    register(registerEmail, registerPassword, registerName).then((body) => {
+        // authToken = body.token;
+        // authUserId = body.userId;
+        localStorage.setItem("authToken", body.token);
+        localStorage.setItem("authUserId", body.userId);
+        toggleScreenWelcome();
+    });
+    // .catch((message) => {
+    //     alert(message);
+    // });
+});
 
 // document.getElementById("login-btn").addEventListener("click", () => {
 //     const loginEmail = document.getElementById("login-email").value;
@@ -87,25 +91,21 @@ import { fileToDataUrl, popupError } from "./helpers.js";
 //     // });
 // });
 
-import("./register.js");
-import("./login.js");
-// import("./welcome.js");
+// const toggleScreenRegister = () => {
+//     document.getElementById("screen-register").style.display = "block";
+//     document.getElementById("nav-register").style.backgroundColor = "rgb(" + 247 + "," + 238 + "," + 197 + ")";
+//     document.getElementById("screen-login").style.display = "none";
+//     document.getElementById("nav-login").style.backgroundColor = "white";
+//     document.getElementById("screen-welcome").style.display = "none";
+// };
 
-const toggleScreenRegister = () => {
-    document.getElementById("screen-register").style.display = "block";
-    document.getElementById("nav-register").style.backgroundColor = "rgb(" + 247 + "," + 238 + "," + 197 + ")";
-    document.getElementById("screen-login").style.display = "none";
-    document.getElementById("nav-login").style.backgroundColor = "white";
-    document.getElementById("screen-welcome").style.display = "none";
-};
-
-const toggleScreenLogin = () => {
-    document.getElementById("screen-login").style.display = "block";
-    document.getElementById("nav-login").style.backgroundColor = "rgb(" + 247 + "," + 238 + "," + 197 + ")";
-    document.getElementById("screen-register").style.display = "none";
-    document.getElementById("nav-register").style.backgroundColor = "white";
-    document.getElementById("screen-welcome").style.display = "none";
-};
+// const toggleScreenLogin = () => {
+//     document.getElementById("screen-login").style.display = "block";
+//     document.getElementById("nav-login").style.backgroundColor = "rgb(" + 247 + "," + 238 + "," + 197 + ")";
+//     document.getElementById("screen-register").style.display = "none";
+//     document.getElementById("nav-register").style.backgroundColor = "white";
+//     document.getElementById("screen-welcome").style.display = "none";
+// };
 
 // const toggleScreenWelcome = () => {
 //     document.getElementById("screen-welcome").style.display = "block";
@@ -122,5 +122,5 @@ const toggleScreenLogin = () => {
 //     // });
 // };
     
-document.getElementById("nav-register").addEventListener("click", toggleScreenRegister);
-document.getElementById("nav-login").addEventListener("click", toggleScreenLogin);
+// document.getElementById("nav-register").addEventListener("click", toggleScreenRegister);
+// document.getElementById("nav-login").addEventListener("click", toggleScreenLogin);

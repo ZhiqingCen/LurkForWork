@@ -12,10 +12,10 @@
     <!-- This is an example app structure, you can modify this as much as you choose --> 
     <header>
         <h1>lurkforwork.com</h1>
-        <nav>
+        <!-- <nav>
             <li class="nav-item" id="nav-register">Register</li>
             <li class="nav-item" id="nav-login">Login</li>
-        </nav>
+        </nav> -->
     </header>
     <main role="main">
         <!-- app goes here --> 
@@ -27,23 +27,29 @@
             <!-- <div id="popup-text">hi</div> -->
             <!-- </div> -->
         </div>
-        <div id="screen-register">
-            <h2>Register</h2>
-            Email: <input id="register-email" type="text"><br />
-            Name: <input id="register-name" type="text"><br />
-            Password: <input id="register-password" type="password"><br />
-            Confirm Password: <input id="register-password-confirm" type="password"><br />
-            <button id="register-btn">Register</button>
-        </div>
-        <div id="screen-login" class="hide">
-            <h2>Login</h2>
-            Email: <input id="login-email" type="text"><br />
-            Password: <input id="login-password" type="password"><br />
-            <button id="login-btn">Login</button>
+        <div id="before-login">
+            <div id="nav-container">
+                <button id="nav-register">Register</button>
+                <button id="nav-login">Login</button>
+            </div>
+            <div id="screen-register">
+                <h2>Register</h2>
+                Email: <input id="register-email" type="text"><br />
+                Name: <input id="register-name" type="text"><br />
+                Password: <input id="register-password" type="password"><br />
+                Confirm Password: <input id="register-password-confirm" type="password"><br />
+                <button id="register-btn">Register</button>
+            </div>
+            <div id="screen-login" class="hide">
+                <h2>Login</h2>
+                Email: <input id="login-email" type="text"><br />
+                Password: <input id="login-password" type="password"><br />
+                <button id="login-btn">Login</button>
+            </div>
         </div>
         <div id="screen-welcome" class="hide">
-            <h2>Welcome!</h2>
-            <div id="user-json"></div>
+            <h2 id="user-json"></h2>
+            <div>Welcome to LurkForWork!</div>
         </div>
     </main>
     <footer>

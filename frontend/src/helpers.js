@@ -13,6 +13,11 @@
  * @param {File} file The file to be read.
  * @return {Promise<string>} Promise which resolves to the file as a data url.
  */
+
+import { BACKEND_PORT } from "./config.js";
+const authToken = localStorage.getItem("authToken");
+const authUserId = localStorage.getItem("authUserId");
+
 export function fileToDataUrl(file) {
     const validFileTypes = [ 'image/jpeg', 'image/png', 'image/jpg' ]
     const valid = validFileTypes.find(type => type === file.type);
@@ -38,5 +43,36 @@ export function popupError(message) {
     popupText.textContent = message;
     closeBtn.addEventListener("click", () => {
         popup.style.display = "none";
+    });
+    // window.addEventListener("click", () => {
+    //     popup.style.display = "none";
+    // })
+}
+
+export function apiCall (path, httpMethod, requestBody) {
+    return new Promise((resolve, reject) => {
+        const init = {
+            method: httpMethod,
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: (path === "auth/register" || path === "auth/login") ? undefined : authToken,
+            },
+            body: httpMethod === "GET" ? undefined : JSON.stringify(requestBody),
+        };
+    
+        fetch(`http://localhost:${BACKEND_PORT}/${path}`, init)
+            .then(response => response.json())
+            .then(body => {
+                if (body.error) {
+                    // alert(body.error); // TODO
+                    // reject(body.error);
+                    popupError(body.error); // TODO
+                } else {
+                    resolve(body);
+                }
+            }).catch((err) => {
+                // alert(message);
+                popupError(err);
+            });
     });
 }

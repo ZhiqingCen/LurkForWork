@@ -51,6 +51,7 @@ export function popupError(message) {
 
 export function apiCall (path, httpMethod, requestBody) {
     let authToken = localStorage.getItem("authToken");
+    // console.log(authToken);
     return new Promise((resolve, reject) => {
         const init = {
             method: httpMethod,

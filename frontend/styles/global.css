@@ -21,6 +21,9 @@ footer {
     align-self: flex-end;
 }
 
+h1 {
+    margin: 0px;
+}
 .hide {
     display: none;
 }
@@ -85,11 +88,50 @@ footer {
     font-size: 20px;
     padding: 5px 10px 0px 0px;
 }
-.close:hover, .close:focus {
+.close:hover{
     color: #aaa;
     text-decoration: none;
     cursor: pointer;
 }
+
 #popup-text {
     padding: 30px;
+}
+
+/* #screen-welcome {
+    display: flex;
+    grid-template-columns: ;
+    grid-template-rows: ; 
+} */
+#screen-welcome {
+    /* display: flex; */
+    flex-direction: column;
+}
+
+/* #user-json {
+    align-self: flex-end;
+    justify-self: right;
+} */
+#user-json {
+    width: 100vw;
+    margin: 0px;
+    padding: 0px;
+    text-align: right;
+}
+
+#like-btn, #comment-btn {
+    width: 50px;
+    height: 30px;
+    background-color: rgb(241, 217, 248);
+    border: solid;
+    border-radius: 5px;
+    border-color: rgb(236, 162, 181);
+}
+#like-btn:hover, #comment-btn:hover {
+    color: #aaa;
+    cursor: pointer;
+}
+
+#icon-like, #icon-comment {
+    font-size: 15pt;
 }

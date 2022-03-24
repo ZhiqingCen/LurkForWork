@@ -54,14 +54,26 @@ h1 {
 }
 #nav-register {
     background-color: rgb(247, 238, 197);
+    /* background-color: rgb(236, 162, 181); */
 }
-
+#nav-login {
+    background-color: transparent;
+}
 #screen-register, #screen-login{
     padding: 10px;
     border: solid;
     border-top: none;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
+}
+#register-btn, #login-btn {
+    width: 95px;
+    color: rgb(203, 105, 223);
+    background-color: transparent;
+    border: solid;
+    border-radius: 5px;
+    margin-top: 10px;
+    border-color: rgb(236, 162, 181);
 }
 
 /* popup-modal */
@@ -118,9 +130,12 @@ h1 {
 
 /* feed */
 .feed {
+    margin-bottom: 20px;
     padding: 10px;
     border: solid;
     border-radius: 5px;
+    min-width: 400px;
+    font-size: 12pt;
     color: rgb(66, 65, 66);
 }
 
@@ -134,12 +149,9 @@ h1 {
     font-size: 15pt;
     margin-bottom: 5px;
 }
-/* .job-start-date {
-
+.job-start-date, .job-post-date {
+    font-style: italic;
 }
-.job-date {
-
-} */
 
 .job-image {
     width: 380px;
@@ -152,13 +164,18 @@ h1 {
 } */
 
 .feed-footer {
-    display: flex;
-    width: 400px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    /* width: 400px; */
+    width: 100%;
     height: 30px;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    /* grid-template-areas: ; */
 }
 .like-num, .comment-num {
-    width: 95px;
+    /* width: 95px; */
+    width: 100%;
     border: solid;
     border-radius: 5px;
     background-color: transparent;
@@ -167,7 +184,8 @@ h1 {
 }
 
 .like-btn, .comment-btn {
-    width: 95px;
+    /* width: 95px; */
+    width: 100%;
     color: rgb(203, 105, 223);
     background-color: transparent;
     border: solid;
@@ -179,7 +197,11 @@ h1 {
     cursor: pointer;
 }
 
-.icon-like, .icon-comment {
+/* .icon-like, .icon-comment {
+    font-size: 50pt;
+    font-weight: 600;
+} */
+#bi {
     font-size: 50pt;
     font-weight: 600;
 }

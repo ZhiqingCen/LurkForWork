@@ -42,20 +42,28 @@ const checkPostDate = (dateString) => {
     }
 };
 
-const showFeed = (feedObject) => {
+const constructFeed = (feedObject) => {
+    const newFeed = document.getElementById("feed").cloneNode(true);
+    newFeed.removeAttribute("id");
+    newFeed.classList.remove("hide");
+    newFeed.style.display = "block";
+
+    console.log(newFeed);
+    console.log(newFeed.children);
+    newFeed.children[0].children[0].innerText = feedObject.title;
+    newFeed.children[0].children[1].innerText = `Start Date: ${changeDateFormat(feedObject.start)}`;
     getProfile(feedObject.creatorId).then((body) => {
-        document.getElementById("job-owner").innerText = `${body.name} - `;
+        newFeed.children[1].children[0].innerText = `${body.name} - `;
     }).catch((err) => {
         popupError(err);
     });
+    newFeed.children[1].children[1].innerText = checkPostDate(feedObject.createdAt);
+    newFeed.children[2].src = feedObject.image;
+    newFeed.children[4].innerText = feedObject.description;
+    newFeed.children[5].children[0].innerText = `${feedObject.likes.length} likes`;
+    newFeed.children[5].children[2].innerText = `${feedObject.comments.length} comments`;
 
-    document.getElementById("job-title").innerText = feedObject.title;
-    document.getElementById("job-start-date").innerText = changeDateFormat(feedObject.start);
-    document.getElementById("job-post-date").innerText = checkPostDate(feedObject.createdAt);
-    document.getElementById("job-image").src = feedObject.image;
-    document.getElementById("job-description").innerText = feedObject.description;
-    document.getElementById("like-num").innerText = `${feedObject.likes.length} likes`;
-    document.getElementById("comment-num").innerText = `${feedObject.comments.length} comments`;
+    return newFeed;
 }
 
 export function toggleScreenWelcome () {
@@ -75,10 +83,12 @@ export function toggleScreenWelcome () {
         console.log(body);
         for (let feed in body) {
             // console.log(body[feed]);
-            showFeed(body[feed]);
+            const newFeed = constructFeed(body[feed]);
+            document.getElementById("feeds").appendChild(newFeed);
+            console.log(document.getElementById("feeds"));
             // changeDateFormat(feedObject.start);
         }
     }).catch((err) => {
-
+        popupError(err);
     });
 };

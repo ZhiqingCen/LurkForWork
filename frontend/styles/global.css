@@ -1,7 +1,7 @@
 /* base styles, feel free to edit */
 html, body {
     margin: 0;
-    padding: 0;
+    padding: 10px;
     height: 100%;
     font-family: Arial;
     min-width: 400px;
@@ -57,11 +57,9 @@ h1 {
 }
 
 #screen-register, #screen-login{
-    /* margin: 10px; */
     padding: 10px;
     border: solid;
     border-top: none;
-    /* border-radius: 5px; */
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
 }
@@ -103,35 +101,85 @@ h1 {
     grid-template-columns: ;
     grid-template-rows: ; 
 } */
+
+/* after login */
 #screen-welcome {
     /* display: flex; */
     flex-direction: column;
 }
-
-/* #user-json {
-    align-self: flex-end;
-    justify-self: right;
-} */
 #user-json {
-    width: 100vw;
+    width: 93vw;
     margin: 0px;
     padding: 0px;
+    font-weight: 600;
+    font-size: 18pt;
     text-align: right;
 }
 
-#like-btn, #comment-btn {
-    width: 50px;
+/* feed */
+.feed {
+    padding: 10px;
+    border: solid;
+    border-radius: 5px;
+    color: rgb(66, 65, 66);
+}
+
+.feed-header {
+    display: flex;
+    justify-content: space-between;
+}
+/* header */
+.job-title {
+    font-weight: 600;
+    font-size: 15pt;
+    margin-bottom: 5px;
+}
+/* .job-start-date {
+
+}
+.job-date {
+
+} */
+
+.job-image {
+    width: 380px;
+    height: 250px;
+    margin-top: 10px;
+}
+
+/* .job-description {
+
+} */
+
+.feed-footer {
+    display: flex;
+    width: 400px;
     height: 30px;
-    background-color: rgb(241, 217, 248);
+    justify-content: space-between;
+}
+.like-num, .comment-num {
+    width: 95px;
+    border: solid;
+    border-radius: 5px;
+    background-color: transparent;
+    color: rgb(203, 105, 223);
+    border-color: rgb(236, 162, 181);
+}
+
+.like-btn, .comment-btn {
+    width: 95px;
+    color: rgb(203, 105, 223);
+    background-color: transparent;
     border: solid;
     border-radius: 5px;
     border-color: rgb(236, 162, 181);
 }
-#like-btn:hover, #comment-btn:hover {
+.like-btn:hover, .comment-btn:hover, .like-num:hover, .comment-num:hover {
     color: #aaa;
     cursor: pointer;
 }
 
-#icon-like, #icon-comment {
-    font-size: 15pt;
+.icon-like, .icon-comment {
+    font-size: 50pt;
+    font-weight: 600;
 }

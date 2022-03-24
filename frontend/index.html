@@ -14,7 +14,7 @@
     <!-- This is an example app structure, you can modify this as much as you choose --> 
     <header>
         <h1>lurkforwork.com</h1>
-        <h2 id="user-json"></h2>
+        <div id="user-json"></div>
         <!-- <nav>
             <li class="nav-item" id="nav-register">Register</li>
             <li class="nav-item" id="nav-login">Login</li>
@@ -52,11 +52,24 @@
         </div>
         <div id="screen-welcome" class="hide">
             <!-- <h2 id="user-json"></h2> -->
-            <div id="feed-footer">
-                <button id="like-num"></button>
-                <button id="like-btn"><i id="icon-like" class="bi bi-hand-thumbs-up"></i></button>
-                <button id="comment-num"></button>
-                <button id="comment-btn"><i id="icon-comment" class="bi bi-chat-square-dots"></i></button>
+            <div id="feed" class="feed">
+                <div id="feed-header" class="feed-header">
+                    <span id="job-title" class="job-title"></span>
+                    <span>Start Date: <em id="job-start-date" class="job-start-date"></em></span>
+                </div>
+                <div>
+                    <span id="job-owner"></span>
+                    <span id="job-post-date"></span>
+                </div>
+                <img src="" alt="an image to describe the job" id="job-image" class="job-image">
+                <h4>Job Description:</h4>
+                <p id="job-description" class="job-description"></p>
+                <div id="feed-footer" class="feed-footer">
+                    <button id="like-num" class="like-num"></button>
+                    <button id="like-btn" class="like-btn"><i id="icon-like" class="bi bi-hand-thumbs-up"></i></button>
+                    <button id="comment-num" class="comment-num"></button>
+                    <button id="comment-btn" class="comment-btn"><i id="icon-comment" class="bi bi-chat-square-dots"></i></button>
+                </div>
             </div>
         </div>
     </main>

@@ -2,8 +2,8 @@
 html, body {
     margin: 0;
     padding: 10px;
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     font-family: Arial;
     min-width: 400px;
     min-height: 700px;
@@ -18,7 +18,7 @@ header {
     align-self: flex-start;
 }
 main {
-    height: 85%;
+    height: 95%;
 }
 footer {
     align-self: flex-end;
@@ -77,6 +77,10 @@ h1 {
     margin-top: 10px;
     border-color: rgb(236, 162, 181);
 }
+#register-btn:hover, #login-btn:hover{
+    color: #aaa;
+    cursor: pointer;
+}
 
 /* popup-modal */
 .modal {
@@ -121,7 +125,7 @@ h1 {
 #screen-welcome {
     /* display: flex; */
     flex-direction: column;
-    height: 98%;
+    height: 100%;
     overflow: scroll;
 }
 #user-json {
@@ -134,99 +138,40 @@ h1 {
     align-self: center;
     justify-self: flex-end;
 }
-
-/* feed */
-/* .feed {
-    margin-bottom: 20px;
-    padding: 10px;
-    border: solid;
-    border-radius: 5px;
-    border-color: rgb(236, 162, 181);
-    min-width: 400px;
-    font-size: 12pt;
-    color: rgb(66, 65, 66);
-}
-
-.feed-header {
-    display: flex;
-    justify-content: space-between;
-}
-.job-title {
-    font-weight: 600;
-    font-size: 15pt;
-    margin-bottom: 5px;
-}
-.job-start-date, .job-post-date {
-    font-style: italic;
-}
-
-.job-image {
-    width: 380px;
-    height: 250px;
-    margin-top: 10px;
-    object-fit: cover;
-}
-
-.feed-footer {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    width: 100%;
-    height: 60px;
-    grid-template-areas: "button1 button2"
-    "detail1 detail2";
-}
-.like-num {
-    grid-area: detail1;
-}
-.comment-num {
-    grid-area: detail2;
-}
-.like-num, .comment-num {
-    padding: 2px;
-    width: 95%;
-    height: 100%;
-    overflow: scroll;
-    font-size: 10pt;
-    background-color: transparent;
-    color: rgb(203, 105, 223);
-    text-align: center;
-    padding-top: 6px;
-    line-height: 5px;
-}
-
-.like-btn {
-    grid-area: button1;
-}
-.comment-btn {
-    grid-area: button2;
-}
-.like-btn, .comment-btn {
-    width: 100%;
-    height: 80%;
+#update-profile {
+    margin-left: 5px;
     color: rgb(203, 105, 223);
     background-color: transparent;
     border: solid;
     border-radius: 5px;
     border-color: rgb(236, 162, 181);
 }
-.like-btn:hover, .comment-btn:hover{
+#update-profile:hover{
     color: #aaa;
     cursor: pointer;
 }
-.comment-btn {
-    display: flex;
-    height: 73%;
-    justify-content: space-between;
-    align-items: center;
-}
-.comment-input {
-    width: 100%;
-    height: 80%;
-    border: 0px;
+
+#screen-update {
+    width: 400px;
+    height: 150px;
+    line-height: 30px;
     border-radius: 5px;
+    border: solid;
+    padding: 20px;
+    font-size: 12pt;
+    color: rgb(66, 65, 66);
+    border-color: rgb(236, 162, 181);
+    z-index: 10;
 }
-#bi {
-    font-size: 50pt;
-    font-weight: 600;
-} */
+#update-btn {
+    color: rgb(203, 105, 223);
+    margin-top: 10px;
+    border: solid;
+    border-radius: 5px;
+    background-color: transparent;
+    border-color: rgb(236, 162, 181);
+}
+#update-btn:hover{
+    color: #aaa;
+    cursor: pointer;
+}

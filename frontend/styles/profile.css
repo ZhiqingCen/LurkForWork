@@ -3,7 +3,7 @@
     padding: 0px;
     width: 100vw;
     height: 100vh;
-    background-color: rgb(252, 250, 244);
+    /* background-color: rgb(252, 250, 244); */
 }
 .profile {
     height: 100vh;
@@ -21,6 +21,9 @@
     display: flex;
     height: 150px;
     width: 100%;
+    margin-bottom: 10px;
+    border-bottom: dashed;
+    border-color: rgb(236, 162, 181);
 }
 .profile-image {
     height: 150px;
@@ -46,10 +49,14 @@
 .profile-watch {
     display: flex;
     flex-direction: column;
+    height: 80px;
+    overflow: scroll;
     /* align-items: center; */
     /* justify-content: center; */
     /* position: relative; */
     margin-bottom: 10px;
+    border-bottom: dashed;
+    border-color: rgb(236, 162, 181);
 }
 .profile-watchby {
     width: 100%;

@@ -18,6 +18,7 @@
         <h1 id="website">lurkforwork.com</h1>
         <!-- <div id="user-json"></div> -->
         <a href="" id="user-json" class="profile-link"></a>
+        <button id="update-profile" class="hide">update profile</button>
         <!-- <nav>
             <li class="nav-item" id="nav-register">Register</li>
             <li class="nav-item" id="nav-login">Login</li>
@@ -33,6 +34,15 @@
             <p id="popup-text">hi~</p>
             <!-- <div id="popup-text">hi</div> -->
             <!-- </div> -->
+        </div>
+        <div id="screen-update" class="hide">
+            <form name="profile_update">
+                Email: <input type="text" name="email" id="update-email"><br />
+                Name: <input type="text" name="name" id="update-name"><br />
+                Password: <input type="password" name="password" id="update-password"><br />
+                Image: <input type="file" name="image" accept="image/jpg, image/png" id="update-image"><br />
+                <button id="update-btn">Submit update</button>
+            </form>
         </div>
         <div id="before-login">
             <div id="nav-container">
@@ -134,13 +144,13 @@
                     </div>
                 </div>
                 <div class="profile-jobs">
-                    <div class="profile-job-feed">
+                    <div id="profile-job-feed" class="profile-job-feed hide">
                         <div class="profile-job-header">
                             <span class="profile-job-title"></span>
                             <span class="profile-job-start-date"></span>
                         </div>
                         <div>
-                            <span class="profile-job-owner"></span>
+                            <!-- <span class="profile-job-owner"></span> -->
                             <span class="profile-job-post-date"></span>
                         </div>
                         <img src="" alt="an image to describe the job" class="profile-job-image">

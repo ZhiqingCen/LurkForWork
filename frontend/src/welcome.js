@@ -1,5 +1,5 @@
 import { fileToDataUrl, popupError, apiCall, newProfileLink } from "./helpers.js";
-import { toggleScreenProfile, createProfile } from "./profile.js";
+import { toggleScreenProfile, createProfile, updateProfile } from "./profile.js";
 
 // let authToken = localStorage.getItem("authToken");
 // let authUserId = localStorage.getItem("authUserId");
@@ -12,7 +12,7 @@ const getFeed = (index) => {
     return apiCall(`job/feed?start=${index}`, "GET", {});
 };
 
-const changeDateFormat = (dateString) => {
+export function changeDateFormat (dateString) {
     let startDate = dateString;
     startDate = startDate.replace("-", "");
     startDate = startDate.replace("-", "");
@@ -23,7 +23,7 @@ const changeDateFormat = (dateString) => {
     return ` - posted on ${day}/${month}/${year}`;
 };
 
-const checkPostDate = (dateString) => {
+export function checkPostDate (dateString) {
     const postDate = new Date(dateString);
     const now = new Date();
 
@@ -75,7 +75,7 @@ const constructFeed = (feedObject) => {
     newFeed.style.display = "block";
 
     console.log(newFeed);
-    console.log(newFeed.children);
+    // console.log(newFeed.children);
     newFeed.children[0].children[0].innerText = feedObject.title;
     newFeed.children[0].children[1].innerText = `Start Date: ${changeDateFormat(feedObject.start)}`;
     getProfile(feedObject.creatorId).then((body) => {
@@ -92,7 +92,7 @@ const constructFeed = (feedObject) => {
     newFeed.children[2].src = feedObject.image;
     newFeed.children[4].innerText = feedObject.description;
     newFeed.children[5].children[0].innerText = `scroll down to view ${feedObject.likes.length} likes`;
-    console.log(feedObject.likes); // TODO make sure the likes are right
+    // console.log(feedObject.likes); // TODO make sure the likes are right
     if (feedObject.likes.length !== 0) {
         // let likeList = "";
         newFeed.children[5].children[0].appendChild(document.createElement("br"));
@@ -113,9 +113,9 @@ const constructFeed = (feedObject) => {
             // }
             // newLink.addEventListener("click", toggleScreenProfile(feedObject.likes[like].userId));
 
-            console.log(newLink);
+            // console.log(newLink);
             newFeed.children[5].children[0].appendChild(newLink);
-            console.log(newFeed.children[5].children[0]);
+            // console.log(newFeed.children[5].children[0]);
             newFeed.children[5].children[0].appendChild(document.createElement("br"));
             // newProfileLink(feedObject.likes[like].userId, feedObject.likes[like].userName);
             // likeList += `${feedObject.likes[like].userName}, `;
@@ -169,6 +169,12 @@ export function toggleScreenWelcome () {
     document.getElementById("nav-register").style.display = "none";
     document.getElementById("screen-login").style.display = "none";
     document.getElementById("nav-login").style.display = "none";
+    document.getElementById("update-profile").style.display = "block";
+    // document.getElementById("update-profile").addEventListener("click", (event) => {
+    //     document.getElementById("screen-update").classList.remove("hide");
+    //     document.getElementById("screen-update").style.display = "block";
+    //     updateProfile();
+    // })
     getProfile(authUserId).then((body) => {
         // document.getElementById("user-json").innerText = JSON.stringify(body);
         console.log(body);
@@ -178,6 +184,14 @@ export function toggleScreenWelcome () {
         userProfile.title = body.name;
         userProfile.textContent = body.name;
         createProfile(body.id, userProfile);
+
+        document.getElementById("update-profile").addEventListener("click", (event) => {
+            document.getElementById("screen-update").classList.remove("hide");
+            document.getElementById("screen-update").style.display = "block";
+            updateProfile(body);
+        })
+
+        
         // document.getElementById("user-json").innerText = `Hi, ${body.name}`;
     }).catch((err) => {
         popupError(err);

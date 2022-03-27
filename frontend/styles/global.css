@@ -2,7 +2,8 @@
 html, body {
     margin: 0;
     padding: 10px;
-    height: 100%;
+    height: 100vh;
+    width: 100vw;
     font-family: Arial;
     min-width: 400px;
     min-height: 700px;
@@ -12,6 +13,8 @@ body {
     flex-direction: column;
 }
 header {
+    display: flex;
+    width: 100vw;
     align-self: flex-start;
 }
 main {
@@ -20,7 +23,6 @@ main {
 footer {
     align-self: flex-end;
 }
-
 h1 {
     margin: 0px;
 }
@@ -94,6 +96,7 @@ h1 {
 }
 .close {
     float: right;
+    align-self: flex-end;
     font-weight: bold;
     font-size: 20px;
     padding: 5px 10px 0px 0px;
@@ -118,23 +121,27 @@ h1 {
 #screen-welcome {
     /* display: flex; */
     flex-direction: column;
+    height: 98%;
+    overflow: scroll;
 }
 #user-json {
-    width: 93vw;
+    width: 93%;
     margin: 0px;
     padding: 0px;
     font-weight: 600;
     font-size: 18pt;
     text-align: right;
+    align-self: center;
+    justify-self: flex-end;
 }
 
 /* feed */
-.feed {
+/* .feed {
     margin-bottom: 20px;
     padding: 10px;
-    border-top: solid;
-    /* border: solid; */
-    /* border-radius: 5px; */
+    border: solid;
+    border-radius: 5px;
+    border-color: rgb(236, 162, 181);
     min-width: 400px;
     font-size: 12pt;
     color: rgb(66, 65, 66);
@@ -144,7 +151,6 @@ h1 {
     display: flex;
     justify-content: space-between;
 }
-/* header */
 .job-title {
     font-weight: 600;
     font-size: 15pt;
@@ -158,20 +164,15 @@ h1 {
     width: 380px;
     height: 250px;
     margin-top: 10px;
+    object-fit: cover;
 }
-
-/* .job-description {
-
-} */
 
 .feed-footer {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    /* width: 400px; */
     width: 100%;
-    height: 50px;
-    /* justify-content: space-between; */
+    height: 60px;
     grid-template-areas: "button1 button2"
     "detail1 detail2";
 }
@@ -182,20 +183,16 @@ h1 {
     grid-area: detail2;
 }
 .like-num, .comment-num {
-    /* width: 95px; */
-    /* grid-area: details; */
-    /* line-height: 5px; */
     padding: 2px;
     width: 95%;
     height: 100%;
     overflow: scroll;
     font-size: 10pt;
-    /* border: solid; */
-    /* border-radius: 5px; */
     background-color: transparent;
     color: rgb(203, 105, 223);
-    /* border-color: rgb(236, 162, 181); */
     text-align: center;
+    padding-top: 6px;
+    line-height: 5px;
 }
 
 .like-btn {
@@ -205,26 +202,31 @@ h1 {
     grid-area: button2;
 }
 .like-btn, .comment-btn {
-    /* grid-area: button; */
-    /* width: 95px; */
     width: 100%;
+    height: 80%;
     color: rgb(203, 105, 223);
     background-color: transparent;
     border: solid;
     border-radius: 5px;
     border-color: rgb(236, 162, 181);
 }
-/* .like-btn:hover, .comment-btn:hover, .like-num:hover, .comment-num:hover { */
 .like-btn:hover, .comment-btn:hover{
     color: #aaa;
     cursor: pointer;
 }
-
-/* .icon-like, .icon-comment {
-    font-size: 50pt;
-    font-weight: 600;
-} */
+.comment-btn {
+    display: flex;
+    height: 73%;
+    justify-content: space-between;
+    align-items: center;
+}
+.comment-input {
+    width: 100%;
+    height: 80%;
+    border: 0px;
+    border-radius: 5px;
+}
 #bi {
     font-size: 50pt;
     font-weight: 600;
-}
+} */

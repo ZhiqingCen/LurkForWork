@@ -1,6 +1,5 @@
-import { BACKEND_PORT } from "./config.js";
-// A helper you may want to use when uploading new images to the server.
-import { fileToDataUrl, popupError, apiCall  } from "./helpers.js";
+import { fileToDataUrl, popupError, apiCall, newProfileLink } from "./helpers.js";
+import { toggleScreenProfile, createProfile } from "./profile.js";
 
 // let authToken = localStorage.getItem("authToken");
 // let authUserId = localStorage.getItem("authUserId");
@@ -21,7 +20,7 @@ const changeDateFormat = (dateString) => {
     const year = startDate.substring(0, 4);
     const month = startDate.substring(4, 6);
     const day = startDate.substring(6, 8);
-    return `posted on ${day}/${month}/${year}`;
+    return ` - posted on ${day}/${month}/${year}`;
 };
 
 const checkPostDate = (dateString) => {
@@ -35,7 +34,7 @@ const checkPostDate = (dateString) => {
     if (hours < 24) {
         // console.log('date is within 24 hours');
         // TODO check if this is right!!!
-        return `posted ${hours}:${minutes} ago`;
+        return ` - posted ${hours}:${minutes} ago`;
     } else {
         // console.log('date is NOT within 24 hours');
         return changeDateFormat(dateString);
@@ -80,7 +79,12 @@ const constructFeed = (feedObject) => {
     newFeed.children[0].children[0].innerText = feedObject.title;
     newFeed.children[0].children[1].innerText = `Start Date: ${changeDateFormat(feedObject.start)}`;
     getProfile(feedObject.creatorId).then((body) => {
-        newFeed.children[1].children[0].innerText = `${body.name} - `;
+        const newLink = newProfileLink(feedObject.creatorId, body.name);
+        if (!document.getElementById(feedObject.creatorId)) {
+            createProfile(feedObject.creatorId, newLink);
+        } 
+        newFeed.children[1].children[0].appendChild(newLink);
+        // newFeed.children[1].children[0].innerText = `${body.name} - `;
     }).catch((err) => {
         popupError(err);
     });
@@ -90,24 +94,50 @@ const constructFeed = (feedObject) => {
     newFeed.children[5].children[0].innerText = `scroll down to view ${feedObject.likes.length} likes`;
     console.log(feedObject.likes); // TODO make sure the likes are right
     if (feedObject.likes.length !== 0) {
-        let likeList = "";
+        // let likeList = "";
+        newFeed.children[5].children[0].appendChild(document.createElement("br"));
         for (let like in feedObject.likes) {
-            likeList += `${feedObject.likes[like].userName}, `;
+            // newProfileLink(feedObject.likes[like].userId, feedObject.likes[like].userName);
+            const newLink = newProfileLink(feedObject.likes[like].userId, feedObject.likes[like].userName);
+            if (!document.getElementById(feedObject.likes[like].userId)) {
+                // createProfile(feedObject.likes[like].userId);
+                createProfile(feedObject.likes[like].userId, newLink);
+                // createProfile(feedObject.likes[like].userId).then(() => {
+                //     newLink.addEventListener("click", toggleScreenProfile(feedObject.likes[like].userId));
+                // });
+                // TODO check if this works
+            } 
+            // else {
+
+            //     newLink.addEventListener("click", toggleScreenProfile(feedObject.likes[like].userId));
+            // }
+            // newLink.addEventListener("click", toggleScreenProfile(feedObject.likes[like].userId));
+
+            console.log(newLink);
+            newFeed.children[5].children[0].appendChild(newLink);
+            console.log(newFeed.children[5].children[0]);
+            newFeed.children[5].children[0].appendChild(document.createElement("br"));
+            // newProfileLink(feedObject.likes[like].userId, feedObject.likes[like].userName);
+            // likeList += `${feedObject.likes[like].userName}, `;
         }
-        if (likeList !== "") {
-            likeList = likeList.substring(0, likeList.length - 2);
-        }
-        const l = document.createElement("p");
-        l.innerText = likeList;
-        l.style.textAlign = "left";
-        newFeed.children[5].children[0].appendChild(l);
+        // if (likeList !== "") {
+            // likeList = likeList.substring(0, likeList.length - 2);
+        // }
+        // const l = document.createElement("p");
+        // l.innerText = likeList;
+        // l.style.textAlign = "left";
+        // newFeed.children[5].children[0].appendChild(l);
     }
 
     newFeed.children[5].children[2].innerText = `scroll down to view ${feedObject.comments.length} comments`;
     for (let comment in feedObject.comments) {
-        const c = document.createElement("p");
-        c.innerText = `${feedObject.comments[comment].userName}: ${feedObject.comments[comment].comment}`;
+        newFeed.children[5].children[2].appendChild(document.createElement("br"));
+        const newLink = newProfileLink(feedObject.comments[comment].userId, feedObject.comments[comment].userName);
+        // c.innerText = `${feedObject.comments[comment].userName}: ${feedObject.comments[comment].comment}`;
+        const c = document.createElement("span");
+        c.innerText = `: ${feedObject.comments[comment].comment}`;
         c.style.textAlign = "left";
+        newFeed.children[5].children[2].appendChild(newLink);
         newFeed.children[5].children[2].appendChild(c);
     }
 
@@ -141,7 +171,14 @@ export function toggleScreenWelcome () {
     document.getElementById("nav-login").style.display = "none";
     getProfile(authUserId).then((body) => {
         // document.getElementById("user-json").innerText = JSON.stringify(body);
-        document.getElementById("user-json").innerText = `Hi, ${body.name}`;
+        console.log(body);
+        const userProfile = document.getElementById("user-json");
+        // userProfile.classList.remove("hide");
+        userProfile.href = `#${body.id}`;
+        userProfile.title = body.name;
+        userProfile.textContent = body.name;
+        createProfile(body.id, userProfile);
+        // document.getElementById("user-json").innerText = `Hi, ${body.name}`;
     }).catch((err) => {
         popupError(err);
     });

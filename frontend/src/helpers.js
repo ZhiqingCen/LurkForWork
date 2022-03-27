@@ -75,3 +75,13 @@ export function apiCall (path, httpMethod, requestBody) {
             });
     });
 }
+
+export function newProfileLink (profileId, profileName) {
+    const newLink = document.getElementById("profile-link").cloneNode(true);
+    newLink.removeAttribute("id");
+    newLink.classList.remove("hide");
+    newLink.href = `#${profileId}`;
+    newLink.title = profileName;
+    newLink.textContent = profileName;
+    return newLink;
+}

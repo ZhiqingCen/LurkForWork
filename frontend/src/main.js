@@ -4,5 +4,6 @@ import { fileToDataUrl, popupError } from "./helpers.js";
 
 import("./register.js");
 import("./login.js");
-
+import("./welcome.js");
+import("./profile.js");
 

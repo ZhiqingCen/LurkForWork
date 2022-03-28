@@ -27,6 +27,8 @@ document.getElementById("register-btn").addEventListener("click", () => {
         localStorage.setItem("authToken", body.token);
         localStorage.setItem("authUserId", body.userId);
         localStorage.setItem("authPassword", registerPassword);
+        localStorage.setItem("authEmail", registerEmail);
+        localStorage.setItem("authName", registerName);
         toggleScreenWelcome();
     }).catch((err) => {
         popupError(err);

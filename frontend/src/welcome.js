@@ -1,5 +1,6 @@
 import { fileToDataUrl, popupError, apiCall, newProfileLink } from "./helpers.js";
-import { toggleScreenProfile, createProfile, updateProfile } from "./profile.js";
+import { createProfile, updateProfile, watchUserByEmail } from "./profile.js";
+// import { createProfile, updateProfile} from "./profile.js";
 
 // let authToken = localStorage.getItem("authToken");
 // let authUserId = localStorage.getItem("authUserId");
@@ -20,7 +21,8 @@ export function changeDateFormat (dateString) {
     const year = startDate.substring(0, 4);
     const month = startDate.substring(4, 6);
     const day = startDate.substring(6, 8);
-    return ` - posted on ${day}/${month}/${year}`;
+    // return ` - posted on ${day}/${month}/${year}`;
+    return `${day}/${month}/${year}`;
 };
 
 export function checkPostDate (dateString) {
@@ -37,7 +39,7 @@ export function checkPostDate (dateString) {
         return ` - posted ${hours}:${minutes} ago`;
     } else {
         // console.log('date is NOT within 24 hours');
-        return changeDateFormat(dateString);
+        return ` - posted on ${changeDateFormat(dateString)}`;
     }
 };
 
@@ -55,6 +57,7 @@ export function checkPostDate (dateString) {
 // };
 
 const likeJob = (id) => {
+    // popupError("like job successfully");
     return apiCall("job/like", "PUT", {
         "id": id,
         "turnon": true,
@@ -80,6 +83,7 @@ const constructFeed = (feedObject) => {
     newFeed.children[0].children[1].innerText = `Start Date: ${changeDateFormat(feedObject.start)}`;
     getProfile(feedObject.creatorId).then((body) => {
         const newLink = newProfileLink(feedObject.creatorId, body.name);
+        // newLink.addEventListener("click", toggleScreenProfile(body.id));
         if (!document.getElementById(feedObject.creatorId)) {
             createProfile(feedObject.creatorId, newLink);
         } 
@@ -99,6 +103,7 @@ const constructFeed = (feedObject) => {
         for (let like in feedObject.likes) {
             // newProfileLink(feedObject.likes[like].userId, feedObject.likes[like].userName);
             const newLink = newProfileLink(feedObject.likes[like].userId, feedObject.likes[like].userName);
+            // newLink.addEventListener("click", toggleScreenProfile(body.id));
             if (!document.getElementById(feedObject.likes[like].userId)) {
                 // createProfile(feedObject.likes[like].userId);
                 createProfile(feedObject.likes[like].userId, newLink);
@@ -133,6 +138,7 @@ const constructFeed = (feedObject) => {
     for (let comment in feedObject.comments) {
         newFeed.children[5].children[2].appendChild(document.createElement("br"));
         const newLink = newProfileLink(feedObject.comments[comment].userId, feedObject.comments[comment].userName);
+        // newLink.addEventListener("click", toggleScreenProfile(body.id));
         // c.innerText = `${feedObject.comments[comment].userName}: ${feedObject.comments[comment].comment}`;
         const c = document.createElement("span");
         c.innerText = `: ${feedObject.comments[comment].comment}`;
@@ -147,7 +153,14 @@ const constructFeed = (feedObject) => {
     //         "turnon": true,
     //     });
     // }
-    newFeed.children[5].children[1].onclick = likeJob(feedObject.id);
+    // newFeed.children[5].children[1].onclick = likeJob(feedObject.id);
+    newFeed.children[5].children[1].addEventListener("click", () => {
+        likeJob(feedObject.id).then(() => {
+            popupError("like job successfully");
+        }).catch((err) => {
+            popupError(err);
+        });
+    });
     // newFeed.children[5].children[3].onclick = commentJob(comment);
     // newFeed.children[5].children[3].addEventListener("input", () => {
     //     return apiCall("job/comment", "POST", {
@@ -170,6 +183,7 @@ export function toggleScreenWelcome () {
     document.getElementById("screen-login").style.display = "none";
     document.getElementById("nav-login").style.display = "none";
     document.getElementById("update-profile").style.display = "block";
+    document.getElementById("watch-user").style.display = "block";
     // document.getElementById("update-profile").addEventListener("click", (event) => {
     //     document.getElementById("screen-update").classList.remove("hide");
     //     document.getElementById("screen-update").style.display = "block";
@@ -178,6 +192,7 @@ export function toggleScreenWelcome () {
     getProfile(authUserId).then((body) => {
         // document.getElementById("user-json").innerText = JSON.stringify(body);
         console.log(body);
+        localStorage.setItem("authName", body.name);
         const userProfile = document.getElementById("user-json");
         // userProfile.classList.remove("hide");
         userProfile.href = `#${body.id}`;
@@ -186,10 +201,30 @@ export function toggleScreenWelcome () {
         createProfile(body.id, userProfile);
 
         document.getElementById("update-profile").addEventListener("click", (event) => {
-            document.getElementById("screen-update").classList.remove("hide");
-            document.getElementById("screen-update").style.display = "block";
+            const screenUpdate = document.getElementById("screen-update");
+            screenUpdate.classList.remove("hide");
+            screenUpdate.style.display = "block";
+            const closeBtn = document.getElementById("screen-update-close");
+            closeBtn.addEventListener("click", () => {
+                screenUpdate.style.display = "none";
+            });
             updateProfile(body);
-        })
+        });
+
+        document.getElementById("watch-user").addEventListener("click", (event) => {
+            const popupWatch = document.getElementById("screen-watch");
+            popupWatch.classList.remove("hide");
+            popupWatch.style.display = "block";
+            // const popup = document.getElementById("popup-modal");
+            // const popupText = document.getElementById("popup-text");
+            const closeBtn = document.getElementById("watch-popup-close");
+            // popup.style.display = "block";
+            // popupText.textContent = message;
+            closeBtn.addEventListener("click", () => {
+                popupWatch.style.display = "none";
+            });
+            watchUserByEmail();
+        });
 
         
         // document.getElementById("user-json").innerText = `Hi, ${body.name}`;

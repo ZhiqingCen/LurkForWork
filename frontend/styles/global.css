@@ -96,7 +96,7 @@ h1 {
     overflow: auto;
     border: solid;
     border-radius: 4px;
-    background-color: rgb(236, 162, 181);
+    background-color: rgb(245, 223, 228);
 }
 .close {
     float: right;
@@ -138,7 +138,8 @@ h1 {
     align-self: center;
     justify-self: flex-end;
 }
-#update-profile {
+#update-profile, #watch-user, #watch-user-btn {
+    width: 150px;
     margin-left: 5px;
     color: rgb(203, 105, 223);
     background-color: transparent;
@@ -146,9 +147,13 @@ h1 {
     border-radius: 5px;
     border-color: rgb(236, 162, 181);
 }
-#update-profile:hover{
+#update-profile:hover, #watch-user:hover, #watch-user-btn:hover{
     color: #aaa;
     cursor: pointer;
+}
+.watch-container {
+    padding: 30px;
+    line-height: 30px;
 }
 
 #screen-update {
@@ -174,4 +179,11 @@ h1 {
 #update-btn:hover{
     color: #aaa;
     cursor: pointer;
+}
+#screen-update-close {
+    font-weight: bold;
+    font-size: 20px;
+    height: auto;
+    margin: 0px;
+    padding: 0px;
 }

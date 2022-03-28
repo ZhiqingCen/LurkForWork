@@ -19,6 +19,7 @@ document.getElementById("login-btn").addEventListener("click", () => {
         localStorage.setItem("authToken", body.token);
         localStorage.setItem("authUserId", body.userId);
         localStorage.setItem("authPassword", loginPassword);
+        localStorage.setItem("authEmail", loginEmail);
         toggleScreenWelcome();
     }).catch((err) => {
         popupError(err);

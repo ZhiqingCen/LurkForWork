@@ -1,28 +1,94 @@
-import { fileToDataUrl, popupError, apiCall, newProfileLink  } from "./helpers.js";
+import { fileToDataUrl, popupError, apiCall, toggleScreenProfile, newProfileLink  } from "./helpers.js";
 import { changeDateFormat, checkPostDate, toggleScreenWelcome } from "./welcome.js";
 
-export function toggleScreenProfile(profileId) {
-    const profileElement = document.getElementById(profileId);
-    // console.log(profileElement);
-    if (profileElement) {
-        document.getElementById("screen-profile").classList.remove("hide");
-        document.getElementById("screen-profile").display = "block";
-        profileElement.classList.remove("hide");
-        profileElement.style.display = "flex";
-        document.getElementById("screen-welcome").display = "none";
-        // console.log(`here ${profileId}`);
-        // document.getElementById("profile-close").addEventListener("click", () => {
-        // console.log(document.getElementById(`${profileId}-close`));
-        document.getElementById(`${profileId}-close`).addEventListener("click", () => {
-            // console.log("here");
-            // profileElement.style.display = "none";
-            document.getElementById("screen-profile").display = "none";
-            document.getElementById("screen-welcome").display = "flex";
-            window.scrollTo(0, 0);
-            // document.getElementById("website").scrollIntoView();
-            // toggleScreenWelcome();
+// export function toggleScreenProfile(profileId) {
+//     const profileElement = document.getElementById(profileId);
+//     console.log(profileElement);
+//     if (profileElement) {
+//         document.getElementById("screen-profile").classList.remove("hide");
+//         document.getElementById("screen-profile").display = "block";
+//         profileElement.classList.remove("hide");
+//         profileElement.style.display = "flex";
+//         document.getElementById("screen-welcome").display = "none";
+//         // console.log(`here ${profileId}`);
+//         // document.getElementById("profile-close").addEventListener("click", () => {
+//         // console.log(document.getElementById(`${profileId}-close`));
+//         document.getElementById(`${profileId}-close`).addEventListener("click", () => {
+//             // console.log("here");
+//             // profileElement.style.display = "none";
+//             document.getElementById("screen-profile").display = "none";
+//             document.getElementById("screen-welcome").display = "flex";
+//             window.scrollTo(0, 0);
+//             // document.getElementById("website").scrollIntoView();
+//             // toggleScreenWelcome();
+//             console.log("close here");
+//         });
+//     }
+// }
+
+// const update = (email, password, name, image) => {
+//     return apiCall("user", "PUT", {
+//         "email": email,
+//         "password": password,
+//         "name": name,
+//         "image":image,
+//     });
+// };
+
+
+const watchUser = (email, watchBool) => {
+    return apiCall("user/watch", "PUT", {
+        "email": email,
+        "turnon": watchBool,
+    })
+}
+
+// var userWatchedLink = undefined;
+
+const addWatch = (profileObject) => {
+    // userWatchedLink = newLink;
+    let watchNum = profileObject.children[2].children[0].innerText;
+    watchNum = watchNum.match(/\d+/)[0];
+    // watchNum = watchNum + 1;
+    // ++watchNum;
+    // console.log(`watchNum = ${watchNum}`);
+    profileObject.children[2].children[0].innerText = `Watched by ${++watchNum} users`;
+    // const newLink = newProfileLink(localStorage.getItem("authUserId"), localStorage.getItem("authName"));
+    // profileObject.children[2].children[1].appendChild(newLink);
+}
+
+const removeWatch = (profileObject) => {
+    // if (userWatchedLink) {
+    //     profileObject.children[2].children[1].removeChild(userWatchedLink);
+    // }
+    let watchNum = profileObject.children[2].children[0].innerText;
+    watchNum = watchNum.match(/\d+/)[0];
+    // watchNum = watchNum - 1;
+    // --watchNum;
+    // console.log(`watchNum = ${watchNum}`);
+    profileObject.children[2].children[0].innerText = `Watched by ${--watchNum} users`;
+}
+
+const toggleWatchBtn = (watchBtn, unwatchBtn, email, profileObject) => {
+    watchBtn.addEventListener("click", () => {
+        watchUser(email, true).then(() => {
+            watchBtn.style.display = "none";
+            unwatchBtn.style.display = "block";
+            // updateWatchDetails(profileObject, newProfileLink (profileId, profileName));
+            addWatch(profileObject);
+        }).catch((err) => {
+            popupError(err);
         });
-    }
+    })
+    unwatchBtn.addEventListener("click", () => {
+        watchUser(email, false).then(() => {
+            watchBtn.style.display = "block";
+            unwatchBtn.style.display = "none";
+            removeWatch(profileObject);
+        }).catch((err) => {
+            popupError(err);
+        });
+    })
 }
 
 const constructProfile = (profileObject) => {
@@ -32,41 +98,92 @@ const constructProfile = (profileObject) => {
     if (!existProfile) {
         const newProfile = document.getElementById("profile").cloneNode(true);
         newProfile.id = profileObject.id; // TODO change id
-        // newProfile.classList.remove("hide");
+        newProfile.classList.remove("hide");
+        newProfile.style.display = "flex";
         // console.log(newProfile);
-
+        const authUserId = localStorage.getItem("authUserId");
         newProfile.children[0].id = `${profileObject.id}-close`;
 
         if (profileObject.image) {
             newProfile.children[1].children[0].src = profileObject.image;
+        } else {
+            newProfile.children[1].children[0].style.display = "none";
         }
 
         newProfile.children[1].children[1].children[0].innerText = profileObject.name;
         newProfile.children[1].children[1].children[1].innerText = `id: ${profileObject.id}`;
         newProfile.children[1].children[1].children[2].innerText = `email: ${profileObject.email}`;
-
+        
+        // // if own profile, disable watch and unwatch button
+        // if (newProfile.id === authUserId) {
+        //     newProfile.children[1].children[1].children[3].style.display = "none";
+        //     newProfile.children[1].children[1].children[4].style.display = "none";
+        // }
+        let watched = false;
         newProfile.children[2].children[0].innerText = `Watched by ${profileObject.watcheeUserIds.length} users`;
-
+        // let userWatchedLink = undefined;
         if (profileObject.watcheeUserIds.length !== 0) {
             for (let id in profileObject.watcheeUserIds) {
-                newProfile.children[2].children[1].appendChild(document.createElement("br"));
+                // newProfile.children[2].children[1].appendChild(document.createElement("br"));
                 const checkProfile = document.getElementById(profileObject.watcheeUserIds[id]);
                 let newLink = null;
                 if (!checkProfile) {
                     getProfile(profileObject.watcheeUserIds[id]).then((body) => {
-                        console.log(body);
+                        constructProfile(body);
+                    // }).then((body) => {
+                        newProfile.children[2].children[1].appendChild(document.createElement("br"));
                         newLink = newProfileLink(body.id, body.name);
                         newLink.addEventListener("click", toggleScreenProfile(body.id));
-                        constructProfile(body);
-                    }).catch((err) => {
+                        console.log(body);
+                        newProfile.children[2].children[1].appendChild(newLink);
+                    })
+                    .catch((err) => {
                         popupError(err);
                     });
                 } else {
-                    newLink = newProfileLink(profileObject.watcheeUserIds[id], checkProfile.children[1].children[1].children[0].innerText)
+                    newProfile.children[2].children[1].appendChild(document.createElement("br"));
+                    newLink = newProfileLink(profileObject.watcheeUserIds[id], checkProfile.children[1].children[1].children[0].innerText);
+                    // newLink.addEventListener("click", toggleScreenProfile(profileObject.watcheeUserIds[id]));
+                    newProfile.children[2].children[1].appendChild(newLink);
                 }
-                newProfile.children[2].children[1].appendChild(newLink);
+                // console.log(`watch ${profileObject.watcheeUserIds[id]}, auth ${authUserId}`);
+                if (profileObject.watcheeUserIds[id] == authUserId) {
+                    watched = true;
+                    // userWatchedLink = newLink;
+                    // console.log(`watched ${profileObject.watcheeUserIds[id]}`);
+                }
+                
             }
         }
+        // console.log(newProfile.children[2].children[1]);
+        const watchBtn = newProfile.children[1].children[1].children[3];
+        const unwatchBtn = newProfile.children[1].children[1].children[4];
+        toggleWatchBtn(watchBtn, unwatchBtn, profileObject.email, newProfile);
+        console.log(watched);
+        // if (watched === true) {
+        //     // if watched, show unwatch button
+        //     watchBtn.style.display = "none";
+        //     unwatchBtn.style.display = "block";
+        // } else {
+        //     // else, show watch button
+        //     watchBtn.style.display = "block";
+        //     unwatchBtn.style.display = "none";
+        // }
+        // watched = false;
+        // if own profile, disable watch and unwatch button
+        if (newProfile.id === authUserId) {
+            watchBtn.style.display = "none";
+            unwatchBtn.style.display = "none";
+        } else if (watched === true) {
+            // if watched, show unwatch button
+            watchBtn.style.display = "none";
+            unwatchBtn.style.display = "block";
+        } else {
+            // else, show watch button
+            watchBtn.style.display = "block";
+            unwatchBtn.style.display = "none";
+        }
+
         // console.log(profileObject.jobs);
         if (profileObject.jobs.length !== 0) {
             for (let job in profileObject.jobs) {
@@ -150,6 +267,27 @@ const convertBase64 = (imageFile) => {
 // data => console.log(data)
 // );
 
+export function watchUserByEmail () {
+    const form = document.forms.watch_user;
+    document.getElementById("watch-user-btn").addEventListener("click", (event) => {
+        console.log("here");
+        event.preventDefault();
+        let email = form.elements.email.value;
+        if (email) {
+            watchUser(email, true).then(() => {
+                document.getElementById("screen-watch").style.display = "none";
+                popupError("watch user successfully");
+            }).catch((err) => {
+                document.getElementById("screen-watch").style.display = "none";
+                popupError(err);
+            });
+        } else {
+            document.getElementById("screen-watch").style.display = "none";
+            popupError("please enter an email");
+        }
+    });
+}
+
 export function updateProfile (profileObject) {
     const form = document.forms.profile_update;
     // const testImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==";
@@ -178,11 +316,56 @@ export function updateProfile (profileObject) {
         console.log(image);
         if (!image.value) {
             imagePath = undefined;
+            update(email, password, name, imagePath).then((body) => {
+            // update(email, password, name, testImage).then((body) => {
+                document.getElementById("screen-update").style.display = "none";
+                popupError("profile updated successfully");
+                const userProfile = document.getElementById(profileObject.id);
+                if (imagePath) {
+                    userProfile.children[1].children[0].src = imagePath;
+                }
+                if (email) {
+                    userProfile.children[1].children[1].children[2].innerText = `email: ${email}`;
+                    localStorage.setItem("authEmail", email);
+                }
+                if (name) {
+                    document.getElementById("user-json").title = name;
+                    document.getElementById("user-json").textContent = name;
+                    localStorage.setItem("authName", name);
+                    userProfile.children[1].children[1].children[0].innerText = name;
+                    userProfile.children[1].children[1].children[0].style.display = "block";
+                }
+                console.log(body);
+            }).catch((err) => {
+                popupError(err);
+            });
         } else {
             convertBase64(image.files[0]).then((data) => {
                 imagePath = data;
                 console.log(imagePath);
             })//;
+            .then(() => {
+                update(email, password, name, imagePath).then((body) => {
+                // update(email, password, name, testImage).then((body) => {
+                    document.getElementById("screen-update").style.display = "none";
+                    popupError("profile updated successfully");
+                    const userProfile = document.getElementById(profileObject.id);
+                    if (imagePath) {
+                        userProfile.children[1].children[0].src = imagePath;
+                    }
+                    if (email) {
+                        userProfile.children[1].children[1].children[2].innerText = `email: ${email}`;
+                    }
+                    if (name) {
+                        document.getElementById("user-json").title = name;
+                        document.getElementById("user-json").textContent = name;
+                        userProfile.children[1].children[1].children[0].innerText = name;
+                    }
+                    console.log(body);
+                }).catch((err) => {
+                    popupError(err);
+                });
+            })
             .catch((err) => {
                 popupError(err);
             });
@@ -197,26 +380,26 @@ export function updateProfile (profileObject) {
         // reader.onerror = function (error) {
         //     console.log('Error: ', error);
         // };
-
-        update(email, password, name, imagePath).then((body) => {
-        // update(email, password, name, testImage).then((body) => {
-            document.getElementById("screen-update").style.display = "none";
-            popupError("profile updated successfully");
-            const userProfile = document.getElementById(profileObject.id);
-            if (imagePath) {
-                userProfile.children[1].children[0].src = imagePath;
-            }
-            if (email) {
-                userProfile.children[1].children[1].children[2].innerText = `email: ${email}`;
-            }
-            if (name) {
-                document.getElementById("user-json").title = name;
-                document.getElementById("user-json").textContent = name;
-                userProfile.children[1].children[1].children[0].innerText = name;
-            }
-            console.log(body);
-        }).catch((err) => {
-            popupError(err);
-        });
+        // console.log(`image sent through frontend: ${imagePath}`);
+        // update(email, password, name, imagePath).then((body) => {
+        // // update(email, password, name, testImage).then((body) => {
+        //     document.getElementById("screen-update").style.display = "none";
+        //     popupError("profile updated successfully");
+        //     const userProfile = document.getElementById(profileObject.id);
+        //     if (imagePath) {
+        //         userProfile.children[1].children[0].src = imagePath;
+        //     }
+        //     if (email) {
+        //         userProfile.children[1].children[1].children[2].innerText = `email: ${email}`;
+        //     }
+        //     if (name) {
+        //         document.getElementById("user-json").title = name;
+        //         document.getElementById("user-json").textContent = name;
+        //         userProfile.children[1].children[1].children[0].innerText = name;
+        //     }
+        //     console.log(body);
+        // }).catch((err) => {
+        //     popupError(err);
+        // });
     });
 }

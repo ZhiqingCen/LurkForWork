@@ -76,6 +76,35 @@ export function apiCall (path, httpMethod, requestBody) {
     });
 }
 
+export function toggleScreenProfile(profileId) {
+    const profileElement = document.getElementById(profileId);
+    const screenProfile = document.getElementById("screen-profile");
+    const screenWelcome = document.getElementById("screen-welcome");
+    // console.log(`here ${profileId}`);
+    // console.log(profileElement);
+    if (profileElement) {
+        screenProfile.classList.remove("hide");
+        screenProfile.display = "block";
+        profileElement.classList.remove("hide");
+        profileElement.style.display = "flex";
+        screenWelcome.display = "none";
+        // console.log(`here ${profileId}`);
+        // document.getElementById("profile-close").addEventListener("click", () => {
+        // console.log(document.getElementById(`${profileId}-close`));
+        profileElement
+        document.getElementById(`${profileId}-close`).addEventListener("click", () => {
+            // console.log("here");
+            // profileElement.style.display = "none";
+            screenProfile.display = "none";
+            screenWelcome.display = "flex";
+            window.scrollTo(0, 0);
+            // document.getElementById("website").scrollIntoView();
+            // toggleScreenWelcome();
+            // console.log("close here");
+        });
+    }
+}
+
 export function newProfileLink (profileId, profileName) {
     const newLink = document.getElementById("profile-link").cloneNode(true);
     newLink.removeAttribute("id");
@@ -83,5 +112,6 @@ export function newProfileLink (profileId, profileName) {
     newLink.href = `#${profileId}`;
     newLink.title = profileName;
     newLink.textContent = profileName;
+    newLink.addEventListener("click", toggleScreenProfile(profileId));
     return newLink;
 }

@@ -36,6 +36,7 @@
 }
 .profile-name {
     font-size: 20pt;
+    margin: 15px;
 }
 .profile-id, .profile-email {
     font-size: 14pt;
@@ -43,6 +44,19 @@
 .profile-details {
     display: flex;
     flex-direction: column;
+}
+.watch-btn, .unwatch-btn {
+    font-size: 12pt;
+    margin-top: 10px;
+    color: rgb(203, 105, 223);
+    background-color: transparent;
+    border: solid;
+    border-radius: 5px;
+    border-color: rgb(236, 162, 181);
+}
+.watch-btn:hover, .unwatch-btn:hover{
+    color: #aaa;
+    cursor: pointer;
 }
 
 /* watched by */
@@ -67,6 +81,7 @@
     width: 100%;
     /* margin: 0px; */
     text-align: center;
+    line-height: 13px;
 }
 .profile-link {
     color: rgb(236, 162, 181);

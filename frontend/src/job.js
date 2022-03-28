@@ -1,5 +1,9 @@
-import { fileToDataUrl, popupError, apiCall, newProfileLink } from "./helpers.js";
-import { createProfile, updateProfile, watchUserByEmail, convertBase64 } from "./profile.js";
+import { popupError, apiCall } from "./helpers.js";
+import { convertBase64 } from "./profile.js";
+
+//-----------------------------------//
+//----------- add new job -----------//
+//-----------------------------------//
 
 const addJob = (title, image, start, description) => {
     return apiCall("job", "POST", {
@@ -42,6 +46,10 @@ export function addNewJob() {
         }
     });
 };
+
+//----------------------------------//
+//----------- update job -----------//
+//----------------------------------//
 
 const updateJob = (id, title, image, start, description) => {
     return apiCall("job", "PUT", {
@@ -95,6 +103,10 @@ export function updateNewJob(id) {
         }
     });
 };
+
+//----------------------------------//
+//----------- delete job -----------//
+//----------------------------------//
 
 const deleteJob = (id) => {
     return apiCall("job", "DELETE", {

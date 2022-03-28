@@ -1,11 +1,11 @@
-/* feed */
+/* welcome screen - feed */
 .feed {
     margin-bottom: 20px;
     padding: 10px;
     border: solid;
     border-radius: 5px;
     border-color: rgb(236, 162, 181);
-    min-width: 400px;
+    min-width: 350px;
     font-size: 12pt;
     color: rgb(66, 65, 66);
 }
@@ -25,8 +25,8 @@
 }
 
 .job-image {
-    width: 380px;
-    height: 250px;
+    width: 300px;
+    height: 200px;
     margin-top: 10px;
     object-fit: contain;
     align-self: center;

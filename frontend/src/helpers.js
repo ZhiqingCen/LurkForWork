@@ -16,8 +16,6 @@
 
 import { BACKEND_PORT } from "./config.js";
 
-// const authUserId = localStorage.getItem("authUserId");
-
 export function fileToDataUrl(file) {
     const validFileTypes = [ 'image/jpeg', 'image/png', 'image/jpg' ]
     const valid = validFileTypes.find(type => type === file.type);
@@ -35,6 +33,7 @@ export function fileToDataUrl(file) {
     return dataUrlPromise;
 }
 
+// display modal popup with messages
 export function popupError(message) {
     const popup = document.getElementById("popup-modal");
     const popupText = document.getElementById("popup-text");
@@ -44,14 +43,11 @@ export function popupError(message) {
     closeBtn.addEventListener("click", () => {
         popup.style.display = "none";
     });
-    // window.addEventListener("click", () => {
-    //     popup.style.display = "none";
-    // })
 }
 
+// sent out api call
 export function apiCall (path, httpMethod, requestBody) {
     let authToken = localStorage.getItem("authToken");
-    // console.log(authToken);
     return new Promise((resolve, reject) => {
         const init = {
             method: httpMethod,
@@ -76,35 +72,26 @@ export function apiCall (path, httpMethod, requestBody) {
     });
 }
 
+// navigate to profile page
 export function toggleScreenProfile(profileId) {
     const profileElement = document.getElementById(profileId);
     const screenProfile = document.getElementById("screen-profile");
     const screenWelcome = document.getElementById("screen-welcome");
-    // console.log(`here ${profileId}`);
-    // console.log(profileElement);
     if (profileElement) {
         screenProfile.classList.remove("hide");
         screenProfile.display = "block";
         profileElement.classList.remove("hide");
         profileElement.style.display = "flex";
         screenWelcome.display = "none";
-        // console.log(`here ${profileId}`);
-        // document.getElementById("profile-close").addEventListener("click", () => {
-        // console.log(document.getElementById(`${profileId}-close`));
-        profileElement
         document.getElementById(`${profileId}-close`).addEventListener("click", () => {
-            // console.log("here");
-            // profileElement.style.display = "none";
             screenProfile.display = "none";
             screenWelcome.display = "flex";
             window.scrollTo(0, 0);
-            // document.getElementById("website").scrollIntoView();
-            // toggleScreenWelcome();
-            // console.log("close here");
         });
     }
 }
 
+// generate links to profile pages
 export function newProfileLink (profileId, profileName) {
     const newLink = document.getElementById("profile-link").cloneNode(true);
     newLink.removeAttribute("id");

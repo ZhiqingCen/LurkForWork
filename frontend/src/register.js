@@ -1,8 +1,9 @@
-import { BACKEND_PORT } from "./config.js";
-// A helper you may want to use when uploading new images to the server.
-import { fileToDataUrl, popupError, apiCall } from "./helpers.js";
-
+import { popupError, apiCall } from "./helpers.js";
 import { toggleScreenWelcome } from "./welcome.js";
+
+//------------------------------------//
+//----------- registration -----------//
+//------------------------------------//
 
 const register = (email, password, name) => {
     return apiCall("auth/register", "POST", {

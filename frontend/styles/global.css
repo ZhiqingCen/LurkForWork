@@ -15,7 +15,16 @@ body {
 header {
     display: flex;
     width: 100vw;
+    flex-direction: column;
     align-self: flex-start;
+}
+.flex-mobile {
+    display: flex;
+}
+@media (max-width: 500px) {
+    h1 {
+        font-size: 20pt;
+    }
 }
 main {
     height: 95%;

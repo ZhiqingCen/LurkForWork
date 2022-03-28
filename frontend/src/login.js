@@ -28,7 +28,7 @@ document.getElementById("login-btn").addEventListener("click", () => {
 
 const toggleScreenLogin = () => {
     document.getElementById("screen-login").style.display = "block";
-    document.getElementById("nav-login").style.backgroundColor = "rgb(" + 247 + "," + 238 + "," + 197 + ")";
+    document.getElementById("nav-login").style.backgroundColor = "rgb(" + 245 + "," + 223 + "," + 228 + ")";
     document.getElementById("screen-register").style.display = "none";
     document.getElementById("nav-register").style.backgroundColor = "white";
     document.getElementById("screen-welcome").style.display = "none";

@@ -37,7 +37,7 @@ document.getElementById("register-btn").addEventListener("click", () => {
 
 const toggleScreenRegister = () => {
     document.getElementById("screen-register").style.display = "block";
-    document.getElementById("nav-register").style.backgroundColor = "rgb(" + 247 + "," + 238 + "," + 197 + ")";
+    document.getElementById("nav-register").style.backgroundColor = "rgb(" + 245 + "," + 223 + "," + 228 + ")";
     document.getElementById("screen-login").style.display = "none";
     document.getElementById("nav-login").style.backgroundColor = "white";
     document.getElementById("screen-welcome").style.display = "none";

@@ -7,6 +7,7 @@ html, body {
     font-family: Arial;
     min-width: 400px;
     min-height: 700px;
+    color: rgb(66, 65, 66);
 }
 body {
     display: flex;
@@ -55,8 +56,9 @@ h1 {
     border-top-right-radius: 5px;
 }
 #nav-register {
-    background-color: rgb(247, 238, 197);
+    /* background-color: rgb(247, 238, 197); */
     /* background-color: rgb(236, 162, 181); */
+    background-color: rgb(245, 223, 228);
 }
 #nav-login {
     background-color: transparent;
@@ -67,6 +69,7 @@ h1 {
     border-top: none;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
+    line-height: 30px;
 }
 #register-btn, #login-btn {
     width: 95px;

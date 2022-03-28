@@ -6,4 +6,4 @@ import("./register.js");
 import("./login.js");
 import("./welcome.js");
 import("./profile.js");
-
+import("./job.js")

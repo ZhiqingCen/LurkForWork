@@ -45,7 +45,7 @@
     display: flex;
     flex-direction: column;
 }
-.watch-btn, .unwatch-btn {
+.watch-btn, .unwatch-btn, .job-update-btn, .job-delete-btn {
     font-size: 12pt;
     margin-top: 10px;
     color: rgb(203, 105, 223);
@@ -54,7 +54,7 @@
     border-radius: 5px;
     border-color: rgb(236, 162, 181);
 }
-.watch-btn:hover, .unwatch-btn:hover{
+.watch-btn:hover, .unwatch-btn:hover, .job-update-btn:hover, .job-delete-btn:hover{
     color: #aaa;
     cursor: pointer;
 }
@@ -123,4 +123,9 @@
     height: 200px;
     margin-top: 10px;
     object-fit: contain;
+}
+
+.modify-job {
+    display: flex;
+    justify-content: space-evenly;
 }

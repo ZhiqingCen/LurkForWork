@@ -1,5 +1,6 @@
 import { fileToDataUrl, popupError, apiCall, toggleScreenProfile, newProfileLink  } from "./helpers.js";
 import { changeDateFormat, checkPostDate, toggleScreenWelcome } from "./welcome.js";
+import { addNewJob, updateNewJob, deleteNewJob } from "./job.js";
 
 // export function toggleScreenProfile(profileId) {
 //     const profileElement = document.getElementById(profileId);
@@ -42,6 +43,11 @@ const watchUser = (email, watchBool) => {
         "turnon": watchBool,
     })
 }
+const deleteJob = (id) => {
+    return apiCall("job", "DELETE", {
+        "id": id,
+    });
+};
 
 // var userWatchedLink = undefined;
 
@@ -208,6 +214,43 @@ const constructProfile = (profileObject) => {
                 newFeed.children[1].children[0].innerText = checkPostDate(profileObject.jobs[job].createdAt);
                 newFeed.children[2].src = profileObject.jobs[job].image;
                 newFeed.children[4].innerText = profileObject.jobs[job].description;
+
+                if (newProfile.id === authUserId) {
+                    const jobUpdateBtn = newFeed.children[5].children[0];
+                    jobUpdateBtn.classList.remove("hide");
+                    jobUpdateBtn.style.display = "block";
+                    jobUpdateBtn.addEventListener("click", () => {
+                        const screenUpdateJob = document.getElementById("screen-job-update");
+                        screenUpdateJob.classList.remove("hide");
+                        screenUpdateJob.style.display = "block";
+                        const closeBtn = document.getElementById("job-update-popup-close");
+                        closeBtn.addEventListener("click", () => {
+                            screenUpdateJob.style.display = "none";
+                        });
+                        // addNewJob();
+                        updateNewJob(profileObject.jobs[job].id);
+                    });
+                    
+                    const jobDeleteBtn = newFeed.children[5].children[1];
+                    jobDeleteBtn.classList.remove("hide");
+                    jobDeleteBtn.style.display = "block";
+                    jobDeleteBtn.addEventListener("click", (event) => {
+                        // deleteNewJob(profileObject.jobs[job].id);
+                        event.preventDefault();
+                        deleteJob(profileObject.jobs[job].id).then((body) => {
+                            popupError("job deleted successfully");
+                            console.log(body);
+                        }).catch((err) => {
+                            popupError(err);
+                        });
+                        newFeed.style.display = "none";
+                    })
+                }
+                // <button class="job-update-btn hide">Update Job</button>
+                // <button class="job-delete-btn hide">Delete Job</button>
+
+
+
                 newProfile.children[3].appendChild(newFeed);
             }
         }
@@ -253,7 +296,7 @@ const update = (email, password, name, image) => {
     });
 };
 
-const convertBase64 = (imageFile) => {
+export function convertBase64 (imageFile) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(imageFile);
@@ -303,6 +346,13 @@ export function updateProfile (profileObject) {
         console.log(`email:${email}, name:${name}, password:${password}, image:${image.value}`);
         console.log(profileObject);
         console.log(profileObject.email);
+
+        // if (email === "" || name === "" || password === "" || image.value === "") {
+        //     popupError("please fill in one of the required fields");
+        // } else {
+
+        // }
+
         if (!email || email === profileObject.email) {
             email = undefined;
             console.log(email);

@@ -1,4 +1,3 @@
-/* base styles, feel free to edit */
 html, body {
     margin: 0;
     padding: 10px;
@@ -30,9 +29,6 @@ h1 {
 .hide {
     display: none;
 }
-/* .show {
-    display: block;
-} */
 .nav-item {
     text-decoration: underline;
     cursor: pointer;
@@ -51,13 +47,10 @@ h1 {
 #nav-register, #nav-login {
     width: 50%;
     height: 30px;
-    /* color: white; */
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
 #nav-register {
-    /* background-color: rgb(247, 238, 197); */
-    /* background-color: rgb(236, 162, 181); */
     background-color: rgb(245, 223, 228);
 }
 #nav-login {
@@ -121,15 +114,9 @@ h1 {
     padding: 30px;
 }
 
-/* #screen-welcome {
-    display: flex;
-    grid-template-columns: ;
-    grid-template-rows: ; 
-} */
 
 /* after login */
 #screen-welcome {
-    /* display: flex; */
     flex-direction: column;
     height: 100%;
     overflow: scroll;
@@ -200,7 +187,6 @@ h1 {
 #screen-update-close {
     font-weight: bold;
     font-size: 20px;
-    /* height: 10px; */
     margin: 0px;
     padding: 0px;
 }

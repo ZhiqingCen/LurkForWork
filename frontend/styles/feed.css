@@ -2,7 +2,6 @@
 .feed {
     margin-bottom: 20px;
     padding: 10px;
-    /* border-top: solid; */
     border: solid;
     border-radius: 5px;
     border-color: rgb(236, 162, 181);
@@ -34,18 +33,12 @@
     justify-self: center;
 }
 
-/* .job-description {
-
-} */
-
 .feed-footer {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    /* width: 400px; */
     width: 100%;
     height: 60px;
-    /* justify-content: space-between; */
     grid-template-areas: "button1 button2"
     "detail1 detail2";
 }
@@ -56,27 +49,17 @@
     grid-area: detail2;
 }
 .like-num, .comment-num {
-    /* width: 95px; */
-    /* grid-area: details; */
-    /* line-height: 5px; */
     padding: 2px;
     width: 95%;
     height: 100%;
     overflow: scroll;
-    font-size: 10pt;
-    /* border: solid; */
-    /* border-radius: 5px; */
+    font-size: 9pt;
     background-color: transparent;
     color: rgb(203, 105, 223);
-    /* border-color: rgb(236, 162, 181); */
     text-align: center;
     padding-top: 6px;
-    /* line-height: 5px; */
-    line-height: 13px;
+    line-height: 15px;
 }
-/* .like-num {
-    line-height: 13px;
-} */
 
 .like-btn {
     grid-area: button1;
@@ -85,8 +68,6 @@
     grid-area: button2;
 }
 .like-btn, .comment-btn {
-    /* grid-area: button; */
-    /* width: 95px; */
     width: 100%;
     height: 80%;
     color: rgb(203, 105, 223);
@@ -95,7 +76,6 @@
     border-radius: 5px;
     border-color: rgb(236, 162, 181);
 }
-/* .like-btn:hover, .comment-btn:hover, .like-num:hover, .comment-num:hover { */
 .like-btn:hover, .comment-btn:hover{
     color: #aaa;
     cursor: pointer;

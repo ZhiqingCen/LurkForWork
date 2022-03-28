@@ -126,7 +126,7 @@ const constructProfile = (profileObject) => {
         //     newProfile.children[1].children[1].children[4].style.display = "none";
         // }
         let watched = false;
-        newProfile.children[2].children[0].innerText = `Watched by ${profileObject.watcheeUserIds.length} users`;
+        newProfile.children[2].children[0].innerText = `Watched by ${profileObject.watcheeUserIds.length} users (scroll down)`;
         // let userWatchedLink = undefined;
         if (profileObject.watcheeUserIds.length !== 0) {
             for (let id in profileObject.watcheeUserIds) {
@@ -137,20 +137,20 @@ const constructProfile = (profileObject) => {
                     getProfile(profileObject.watcheeUserIds[id]).then((body) => {
                         constructProfile(body);
                     // }).then((body) => {
-                        newProfile.children[2].children[1].appendChild(document.createElement("br"));
                         newLink = newProfileLink(body.id, body.name);
                         newLink.addEventListener("click", toggleScreenProfile(body.id));
                         console.log(body);
                         newProfile.children[2].children[1].appendChild(newLink);
+                        newProfile.children[2].children[1].appendChild(document.createElement("br"));
                     })
                     .catch((err) => {
                         popupError(err);
                     });
                 } else {
-                    newProfile.children[2].children[1].appendChild(document.createElement("br"));
                     newLink = newProfileLink(profileObject.watcheeUserIds[id], checkProfile.children[1].children[1].children[0].innerText);
                     // newLink.addEventListener("click", toggleScreenProfile(profileObject.watcheeUserIds[id]));
                     newProfile.children[2].children[1].appendChild(newLink);
+                    newProfile.children[2].children[1].appendChild(document.createElement("br"));
                 }
                 // console.log(`watch ${profileObject.watcheeUserIds[id]}, auth ${authUserId}`);
                 if (profileObject.watcheeUserIds[id] == authUserId) {

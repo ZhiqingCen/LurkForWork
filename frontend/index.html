@@ -9,33 +9,23 @@
     <link rel="stylesheet" type="text/css" media="screen" href="styles/global.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="styles/feed.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="styles/profile.css" />
-    <!-- <link rel="stylesheet" href="https://icons.getbootstrap.com/icons/hand-thumbs-up/"> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 </head>
 <body>
     <!-- This is an example app structure, you can modify this as much as you choose --> 
     <header>
         <h1 id="website">lurkforwork.com</h1>
-        <!-- <div id="user-json"></div> -->
         <button id="update-profile" class="hide">update profile</button>
         <button id="watch-user" class="hide">watch user</button>
         <button id="add-job" class="hide">add job</button>
         <a href="" id="user-json" class="profile-link"></a>
-        <!-- <nav>
-            <li class="nav-item" id="nav-register">Register</li>
-            <li class="nav-item" id="nav-login">Login</li>
-        </nav> -->
     </header>
     <main role="main">
         <!-- app goes here --> 
         <a href="" id="profile-link" class="profile-link hide"></a>
         <div id="popup-modal" class="modal">
-            <!-- <div class="modal-container"> -->
-                <!-- <span class="close">&times;</span> -->
             <span id="popup-close" class="close">&times;</span>
             <p id="popup-text">hi~</p>
-            <!-- <div id="popup-text">hi</div> -->
-            <!-- </div> -->
         </div>
         <div id="screen-update" class="modal hide">
             <span id="screen-update-close" class="close">&times;</span>
@@ -100,36 +90,12 @@
                 <button id="login-btn">Submit</button>
             </div>
         </div>
-        <!-- <div id="screen-welcome" class="hide">
-            <div id="feed" class="feed">
-                <div id="feed-header" class="feed-header">
-                    <span id="job-title" class="job-title"></span>
-                    <span>Start Date: <em id="job-start-date" class="job-start-date"></em></span>
-                </div>
-                <div>
-                    <span id="job-owner"></span>
-                    <span id="job-post-date"></span>
-                </div>
-                <img src="" alt="an image to describe the job" id="job-image" class="job-image">
-                <h4>Job Description:</h4>
-                <p id="job-description" class="job-description"></p>
-                <div id="feed-footer" class="feed-footer">
-                    <button id="like-num" class="like-num"></button>
-                    <button id="like-btn" class="like-btn"><i id="icon-like" class="bi bi-hand-thumbs-up"></i></button>
-                    <button id="comment-num" class="comment-num"></button>
-                    <button id="comment-btn" class="comment-btn"><i id="icon-comment" class="bi bi-chat-square-dots"></i></button>
-                </div>
-            </div>
-        </div> -->
         <div id="screen-welcome" class="hide">
             <div id="feeds">
                 <div id="feed" class="feed hide">
                     <div class="feed-header">
                         <span class="job-title"></span>
-                        <!-- <span>Start Date: </span> -->
                         <span class="job-start-date"></span>
-                        <!-- <span><em class="job-start-date"></em></span> -->
-                        <!-- <span><em class="job-start-date"></em></span> -->
                     </div>
                     <div>
                         <span class="job-owner"></span>
@@ -142,15 +108,12 @@
                         <div class="like-num">
                             <div></div>
                             <div class="like-details"></div>
-                            <!-- <p class="like-details"></p> -->
                         </div>
                         <button class="like-btn"><i class="bi bi-hand-thumbs-up"></i></button>
                         <div class="comment-num">
                             <div></div>
                             <div class="comment-details"></div>
-                            <!-- <p class="comment-details"></p> -->
                         </div>
-                        <!-- <button class="comment-btn"><i class="bi bi-chat-square-dots"></i></button> -->
                         <div class="comment-btn">
                             <input type="text" placeholder="comment, submit button ->" class="comment-input">
                             <i class="bi bi-chat-square-dots"></i>
@@ -159,9 +122,7 @@
                 </div>
             </div>
         </div>
-        <!-- <div id="screen-profile" class="screen-profile hide"> -->
         <div id="screen-profile" class="screen-profile hide">
-            <!-- <span id="profile-close" class="close">&times;</span> -->
             <div id="profile" class="profile hide">
                 <span class="close">&times;</span>
                 <div class="profile-info">
@@ -175,14 +136,8 @@
                     </div>
                 </div>
                 <div class="profile-watch">
-                    <!-- <div class="profile-watchby">Watched by:
-                        <span class="profile-watchby-num"></span>
-                        users
-                    </div> -->
                     <div class="profile-watchby"></div>
                     <div class="profile-watchby-list">
-                        <!-- <a href="#screen-profile" class="profile-link">Betty</a>,  -->
-                        <!-- <a href="#screen-profile"class="profile-link">Betty</a> -->
                     </div>
                 </div>
                 <div class="profile-jobs">
@@ -206,9 +161,6 @@
             </div>
         </div>
     </main>
-    <!-- <footer>
-        <p>&copy; lurkforwork.com 2022</p>
-    </footer> -->
     <script type="module" src="src/main.js"></script>
 </body>
 </html>

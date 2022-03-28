@@ -3,19 +3,16 @@
     padding: 0px;
     width: 100vw;
     height: 100vh;
-    /* background-color: rgb(252, 250, 244); */
 }
 .profile {
     height: 100vh;
     width: 100vw;
-    /* display: flex; */
     flex-direction: column;
     z-index: 99;
     padding: 10px;
     color: rgb(66, 65, 66);
-    /* background-color: rgb(250, 245, 246); */
-    /* background-color: rgb(252, 250, 244); */
-
+    border-top: solid;
+    border-color: rgb(236, 162, 181);
 }
 .profile-info {
     display: flex;
@@ -28,10 +25,7 @@
 .profile-image {
     height: 150px;
     width: 150px;
-    /* object-fit: cover; */
     object-fit: contain;
-    /* margin: 0px, 20px, 0px, 5px; */
-    /* margin: 0px, 20px, 0px, 5px; */
     margin-right: 20px;
 }
 .profile-name {
@@ -65,23 +59,18 @@
     flex-direction: column;
     height: 80px;
     overflow: scroll;
-    /* align-items: center; */
-    /* justify-content: center; */
-    /* position: relative; */
     margin-bottom: 10px;
     border-bottom: dashed;
     border-color: rgb(236, 162, 181);
 }
 .profile-watchby {
     width: 100%;
-    /* margin: 0px; */
     text-align: center;
 }
 .profile-watchby-list {
     width: 100%;
-    /* margin: 0px; */
     text-align: center;
-    line-height: 13px;
+    line-height: 15px;
 }
 .profile-link {
     color: rgb(236, 162, 181);
@@ -89,14 +78,13 @@
 
 /* job lists */
 .profile-jobs {
+    overflow: scroll;
 }
-
 
 .profile-job-feed {
     margin: 10px 30px 20px 30px;
     margin-bottom: 20px;
     padding: 10px;
-    /* border-top: solid; */
     border: solid;
     border-radius: 5px;
     border-color: rgb(236, 162, 181);

@@ -138,9 +138,9 @@ const constructFeed = (feedObject) => {
             const c = document.createElement("span");
             c.innerText = `: ${comment}`;
             c.style.textAlign = "left";
-            newFeed.children[5].children[3].children[1].appendChild(newLink);
-            newFeed.children[5].children[3].children[1].appendChild(c);
-            newFeed.children[5].children[3].children[1].appendChild(document.createElement("br"));
+            newFeed.children[5].children[2].children[1].appendChild(newLink);
+            newFeed.children[5].children[2].children[1].appendChild(c);
+            newFeed.children[5].children[2].children[1].appendChild(document.createElement("br"));
 
             let commentNum = newFeed.children[5].children[2].children[0].innerText;
             commentNum = commentNum.match(/\d+/)[0];

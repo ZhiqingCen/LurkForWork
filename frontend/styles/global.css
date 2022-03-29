@@ -170,7 +170,7 @@ h1 {
     padding: 0px;
 }
 #screen-update {
-    width: 400px;
+    width: 350px;
     height: 200px;
     line-height: 30px;
     border-radius: 5px;
@@ -200,7 +200,7 @@ h1 {
     padding: 0px;
 }
 #screen-job-add, #screen-job-update {
-    width: 400px;
+    width: 350px;
     height: 200px;
     line-height: 30px;
     border-radius: 5px;
